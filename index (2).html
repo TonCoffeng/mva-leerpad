@@ -1,0 +1,2236 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVA Academie — Volledig Leerpad</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#E8500A;--navy:#1A2B5F;--dark:#2D2D2D;--mid:#555;--light:#888;
+  --border:#D8D8D8;--bg:#F6F6F6;--white:#FFF;
+  --green:#2E7D32;--green-pale:#E8F5E9;
+  --amber:#E65100;--amber-pale:#FFF3E0;
+  --blue:#1565C0;--blue-pale:#E3F2FD;
+  --purple:#6A1B9A;--purple-pale:#F3E5F5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--dark);font-family:'Roboto',sans-serif;font-size:14px;line-height:1.6;}
+
+/* HEADER */
+.header{background:var(--navy);color:white;padding:32px 48px;border-bottom:5px solid var(--orange);}
+.logo{display:flex;flex-direction:column;line-height:1.1;}
+.logo-top{font-size:14px;font-weight:900;color:var(--orange);text-transform:uppercase;letter-spacing:.05em;}
+.logo-bot{font-size:14px;font-weight:900;color:white;text-transform:uppercase;letter-spacing:.05em;}
+.header-body{display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px;}
+.header-title{font-size:38px;font-weight:900;line-height:1.05;}
+.header-title span{color:var(--orange);}
+.header-sub{font-size:14px;color:rgba(255,255,255,.55);margin-top:8px;font-weight:300;max-width:600px;}
+.header-right{text-align:right;font-size:11px;color:rgba(255,255,255,.35);line-height:1.8;}
+
+/* NAV */
+.nav{background:var(--dark);display:flex;overflow-x:auto;border-bottom:3px solid var(--orange);}
+.nav-item{padding:14px 20px;font-size:12px;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em;transition:all .2s;border-bottom:3px solid transparent;margin-bottom:-3px;}
+.nav-item:hover{color:white;background:rgba(255,255,255,.05);}
+.nav-item.active{color:var(--orange);border-bottom-color:var(--orange);}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 200px);}
+.sidebar{background:white;border-right:1px solid var(--border);padding:0;}
+.main{padding:32px 40px;max-width:900px;}
+
+/* SIDEBAR */
+.sb-section{border-bottom:1px solid var(--border);}
+.sb-section-title{padding:12px 20px;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--light);background:var(--bg);}
+.sb-item{padding:10px 20px;font-size:13px;cursor:pointer;color:var(--mid);display:flex;align-items:center;gap:10px;transition:all .15s;border-left:3px solid transparent;}
+.sb-item:hover{background:var(--bg);color:var(--dark);}
+.sb-item.active{background:var(--blue-pale);color:var(--blue);border-left-color:var(--blue);font-weight:500;}
+.sb-item.done{color:var(--green);}
+.sb-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* SECTION HEADER */
+.section-header{margin-bottom:28px;}
+.section-tag{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+.section-title{font-size:28px;font-weight:900;color:var(--dark);}
+.section-sub{font-size:14px;color:var(--mid);margin-top:6px;font-weight:300;}
+.section-meta{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+.meta-badge{font-size:11px;font-weight:600;padding:4px 10px;background:var(--bg);border:1px solid var(--border);color:var(--mid);}
+
+/* CONTENT BLOCKS */
+.content-block{background:white;border:1px solid var(--border);margin-bottom:16px;}
+.cb-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+.cb-header:hover{background:var(--bg);}
+.cb-title{font-size:14px;font-weight:700;color:var(--dark);}
+.cb-sub{font-size:12px;color:var(--mid);margin-top:2px;}
+.cb-body{padding:20px;display:none;}
+.cb-body.open{display:block;}
+.toggle-icon{font-size:18px;color:var(--light);transition:transform .2s;}
+.toggle-icon.open{transform:rotate(180deg);}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:2px;margin-bottom:16px;}
+.step{display:flex;gap:16px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.step-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:white;flex-shrink:0;margin-top:1px;}
+.step-content{}
+.step-title{font-size:13px;font-weight:700;}
+.step-desc{font-size:12px;color:var(--mid);margin-top:3px;line-height:1.5;}
+
+/* SCRIPT BOX */
+.script-box{background:#1A2B5F;color:white;padding:16px 20px;margin:12px 0;border-left:4px solid var(--orange);}
+.script-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;}
+.script-line{font-size:13px;line-height:1.7;color:rgba(255,255,255,.9);}
+.script-line strong{color:var(--orange);}
+
+/* CHECKLIST */
+.checklist{list-style:none;}
+.checklist li{padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'☐';font-size:14px;flex-shrink:0;margin-top:1px;color:var(--light);}
+.checklist li.done::before{content:'☑';color:var(--green);}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;}
+.data-table th{background:var(--dark);color:white;padding:8px 12px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.data-table td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:nth-child(even) td{background:var(--bg);}
+
+/* WORKFLOW */
+.workflow{display:flex;flex-direction:column;gap:0;}
+.wf-step{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid var(--border);}
+.wf-step:last-child{border-bottom:none;}
+.wf-trigger{background:var(--navy);color:white;padding:14px 16px;font-size:12px;font-weight:700;display:flex;align-items:center;}
+.wf-actions{padding:14px 16px;}
+.wf-actions ul{list-style:none;}
+.wf-actions ul li{font-size:12px;padding:3px 0;color:var(--dark);display:flex;gap:8px;}
+.wf-actions ul li::before{content:'→';color:var(--orange);flex-shrink:0;font-weight:700;}
+
+/* KPI BOX */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0;}
+.kpi-item{background:var(--bg);border:1px solid var(--border);padding:14px;text-align:center;}
+.kpi-num{font-size:24px;font-weight:900;color:var(--orange);}
+.kpi-label{font-size:11px;color:var(--light);margin-top:4px;text-transform:uppercase;letter-spacing:.06em;}
+
+/* INFO BOX */
+.info-box{background:var(--blue-pale);border:1px solid rgba(21,101,192,.2);padding:14px 18px;margin:12px 0;font-size:13px;}
+.info-box strong{color:var(--blue);}
+.warn-box{background:var(--amber-pale);border:1px solid rgba(230,81,0,.2);padding:14px 18px;margin:12px 0;font-size:13px;}
+.warn-box strong{color:var(--amber);}
+.success-box{background:var(--green-pale);border:1px solid rgba(46,125,50,.2);padding:14px 18px;margin:12px 0;font-size:13px;}
+.success-box strong{color:var(--green);}
+
+/* PROGRESS TRACKER */
+.progress-tracker{background:white;border:1px solid var(--border);padding:20px;margin-bottom:24px;}
+.pt-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:16px;}
+.pt-months{display:flex;gap:4px;flex-wrap:wrap;}
+.pt-month{padding:8px 12px;font-size:11px;font-weight:700;text-align:center;cursor:pointer;transition:all .2s;border:2px solid var(--border);}
+.pt-month.current{border-color:var(--orange);color:var(--orange);}
+.pt-month.done{background:var(--green);color:white;border-color:var(--green);}
+.pt-month:hover{border-color:var(--navy);}
+
+/* REFLECTION */
+.reflection{background:var(--bg);border:1px solid var(--border);padding:16px;margin:16px 0;}
+.reflection-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:8px;}
+.reflection textarea{width:100%;border:1px solid var(--border);padding:10px;font-size:13px;font-family:'Roboto',sans-serif;resize:vertical;min-height:80px;background:white;}
+
+/* NINJA BOX */
+.ninja-box{background:var(--navy);color:white;padding:16px 20px;margin:12px 0;}
+.ninja-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:6px;}
+.ninja-quote{font-size:14px;font-style:italic;color:rgba(255,255,255,.85);line-height:1.6;}
+.ninja-attr{font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;}
+
+/* HIDDEN SECTIONS */
+.page-section{display:none;}
+.page-section.active{display:block;}
+
+footer{background:var(--navy);border-top:4px solid var(--orange);padding:20px 48px;display:flex;justify-content:space-between;align-items:center;margin-top:0;}
+.fl{font-size:12px;}
+.fl-top{font-weight:900;color:var(--orange);text-transform:uppercase;}
+.fl-bot{font-weight:900;color:white;text-transform:uppercase;}
+.fn{font-size:11px;color:rgba(255,255,255,.3);text-align:right;line-height:1.6;}
+
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .header{padding:20px;}
+  .main{padding:20px;}
+  .kpi-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo"><div class="logo-top">MAKELAARSVAN.</div><div class="logo-bot">AMSTERDAM</div></div>
+  <div class="header-body">
+    <div>
+      <div class="header-title">MVA <span>Academie</span><br>Volledig Leerpad</div>
+      <div class="header-sub">Van trainee tot senior makelaar · Fase 1 (30 dagen) + 9 verdiepingsmodules · Ninja Selling · Workflows · Financieel · AVV Opleiding</div>
+    </div>
+    <div class="header-right">
+      Versie 1.1 · Maart 2026<br>
+      Ton Coffeng · Hans Koppes<br>
+      Monique · Johan Vast · José Valencia<br>
+      Scott Witteman (BG Accountants)
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-item active" onclick="showPage('fase1', this)">Fase 1 — Dag 1–30</div>
+  <div class="nav-item" onclick="showPage('financieel', this)">Financieel & Admin</div>
+  <div class="nav-item" onclick="showPage('floortime', this)">Floortime</div>
+  <div class="nav-item" onclick="showPage('workflows', this)">Workflows</div>
+  <div class="nav-item" onclick="showPage('modules', this)">Modules 2–10</div>
+  <div class="nav-item" onclick="showPage('avv', this)">AVV Opleiding</div>
+  <div class="nav-item" onclick="showPage('ninja', this)">Ninja Selling</div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+<div class="sidebar">
+
+  <!-- FASE 1 SIDEBAR -->
+  <div id="sb-fase1">
+    <div class="sb-section">
+      <div class="sb-section-title">Fase 1 · Dag 1–30</div>
+      <div class="sb-item active" onclick="showBlock('fase1','b-formaliteiten',this)"><div class="sb-dot" style="background:var(--orange)"></div>1.1 Formaliteiten</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-systemen',this)"><div class="sb-dot" style="background:var(--blue)"></div>1.2 Systemen</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-ninja',this)"><div class="sb-dot" style="background:var(--navy)"></div>1.3 Ninja Selling</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-database',this)"><div class="sb-dot" style="background:var(--green)"></div>1.4 Database & 50 namen</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-leads',this)"><div class="sb-dot" style="background:var(--amber)"></div>1.5 Leaddistributie</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-buurt',this)"><div class="sb-dot" style="background:var(--purple)"></div>1.6 Expertisebuurt</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-yisual',this)"><div class="sb-dot" style="background:var(--orange)"></div>1.7 Yisual & Social</div>
+      <div class="sb-item" onclick="showBlock('fase1','b-aankoop',this)"><div class="sb-dot" style="background:var(--blue)"></div>1.8 Aankoopproces</div>
+    </div>
+  </div>
+
+  <div id="sb-financieel" style="display:none">
+    <div class="sb-section">
+      <div class="sb-section-title">Financieel & Admin</div>
+      <div class="sb-item active" onclick="showBlock('financieel','b-rollen',this)"><div class="sb-dot" style="background:var(--orange)"></div>Rollen & verantwoordelijkheden</div>
+      <div class="sb-item" onclick="showBlock('financieel','b-snelstart',this)"><div class="sb-dot" style="background:var(--blue)"></div>Snelstart opstarten</div>
+      <div class="sb-item" onclick="showBlock('financieel','b-btw',this)"><div class="sb-dot" style="background:var(--green)"></div>BTW & kwartaal</div>
+      <div class="sb-item" onclick="showBlock('financieel','b-maand',this)"><div class="sb-dot" style="background:var(--navy)"></div>Maandelijkse routine</div>
+      <div class="sb-item" onclick="showBlock('financieel','b-factuur',this)"><div class="sb-dot" style="background:var(--amber)"></div>Facturatie Effytool</div>
+      <div class="sb-item" onclick="showBlock('financieel','b-levels',this)"><div class="sb-dot" style="background:var(--purple)"></div>Groeimodel Levels 1–5</div>
+    </div>
+  </div>
+
+  <div id="sb-floortime" style="display:none">
+    <div class="sb-section">
+      <div class="sb-section-title">Floortime</div>
+      <div class="sb-item active" onclick="showBlock('floortime','b-ftbeleid',this)"><div class="sb-dot" style="background:var(--orange)"></div>Beleid & procedure</div>
+      <div class="sb-item" onclick="showBlock('floortime','b-ftopening',this)"><div class="sb-dot" style="background:var(--blue)"></div>Opening & begroeting</div>
+      <div class="sb-item" onclick="showBlock('floortime','b-ftkwalificatie',this)"><div class="sb-dot" style="background:var(--green)"></div>Leadkwalificatie</div>
+      <div class="sb-item" onclick="showBlock('floortime','b-ftvervolgstap',this)"><div class="sb-dot" style="background:var(--navy)"></div>Vervolgstap</div>
+      <div class="sb-item" onclick="showBlock('floortime','b-ftcrm',this)"><div class="sb-dot" style="background:var(--amber)"></div>CRM registratie</div>
+      <div class="sb-item" onclick="showBlock('floortime','b-ftemail',this)"><div class="sb-dot" style="background:var(--purple)"></div>E-mail follow-up</div>
+    </div>
+  </div>
+
+  <div id="sb-workflows" style="display:none">
+    <div class="sb-section">
+      <div class="sb-section-title">Workflows</div>
+      <div class="sb-item active" onclick="showBlock('workflows','b-wfaankoop',this)"><div class="sb-dot" style="background:var(--orange)"></div>Aankoop WF 1–10</div>
+      <div class="sb-item" onclick="showBlock('workflows','b-wfverkoop',this)"><div class="sb-dot" style="background:var(--blue)"></div>Verkoop WF 3–9B</div>
+      <div class="sb-item" onclick="showBlock('workflows','b-promotie',this)"><div class="sb-dot" style="background:var(--purple)"></div>Woningpromotie 7 Fasen</div>
+    </div>
+  </div>
+
+  <div id="sb-modules" style="display:none">
+    <div class="sb-section">
+      <div class="sb-section-title">Modules Hans</div>
+      <div class="sb-item active" onclick="showBlock('modules','b-m2',this)"><div class="sb-dot" style="background:var(--orange)"></div>Module 2 — CRM</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m3',this)"><div class="sb-dot" style="background:var(--blue)"></div>Module 3 — Leads</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m4',this)"><div class="sb-dot" style="background:var(--green)"></div>Module 4 — Verkoopgesprek</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m5',this)"><div class="sb-dot" style="background:var(--navy)"></div>Module 5 — Presentatie</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m6',this)"><div class="sb-dot" style="background:var(--amber)"></div>Module 6 — Onderhandelen</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m7',this)"><div class="sb-dot" style="background:var(--purple)"></div>Module 7 — Bezichtigingen</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m8',this)"><div class="sb-dot" style="background:var(--orange)"></div>Module 8 — Aankoop</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m9',this)"><div class="sb-dot" style="background:var(--blue)"></div>Module 9 — Financiering</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m10',this)"><div class="sb-dot" style="background:var(--green)"></div>Module 10 — Retentie</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m11',this)"><div class="sb-dot" style="background:var(--navy)"></div>Module 11 — Referrals</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m12',this)"><div class="sb-dot" style="background:var(--orange)"></div>Module 12 — Mindset</div>
+      <div class="sb-item" onclick="showBlock('modules','b-m1',this)"><div class="sb-dot" style="background:var(--purple)"></div>Module 1 — Tijdmanagement</div>
+      <div class="sb-item" onclick="showBlock('modules','b-wwa',this)"><div class="sb-dot" style="background:var(--amber)"></div>Woningwaarde Adviesdagen</div>
+      <div class="sb-item" onclick="showBlock('modules','b-kalender',this)"><div class="sb-dot" style="background:var(--green)"></div>Kantoorkalender 2026</div>
+      <div class="sb-item" onclick="showBlock('modules','b-intake',this)"><div class="sb-dot" style="background:var(--blue)"></div>Intake vragen verkoop</div>
+    </div>
+  </div>
+
+  <div id="sb-avv" style="display:none">
+    <div class="sb-section">
+      <div class="sb-section-title">AVV Opleiding</div>
+      <div class="sb-item active" onclick="showBlock('avv','b-armt',this)"><div class="sb-dot" style="background:var(--orange)"></div>A-RMT (BT1 + Praktijk)</div>
+      <div class="sb-item" onclick="showBlock('avv','b-bt12',this)"><div class="sb-dot" style="background:var(--blue)"></div>BT1 + BT2 volledig</div>
+      <div class="sb-item" onclick="showBlock('avv','b-modules-avv',this)"><div class="sb-dot" style="background:var(--green)"></div>Modules & examens</div>
+      <div class="sb-item" onclick="showBlock('avv','b-kosten',this)"><div class="sb-dot" style="background:var(--navy)"></div>Kosten & startmomenten</div>
+    </div>
+  </div>
+
+  <div id="sb-ninja" style="display:none">
+    <div class="sb-section">
+      <div class="sb-section-title">Ninja Selling</div>
+      <div class="sb-item active" onclick="showBlock('ninja','b-principes',this)"><div class="sb-dot" style="background:var(--orange)"></div>4 Principes</div>
+      <div class="sb-item" onclick="showBlock('ninja','b-ninja9',this)"><div class="sb-dot" style="background:var(--blue)"></div>Ninja Nine</div>
+      <div class="sb-item" onclick="showBlock('ninja','b-ford',this)"><div class="sb-dot" style="background:var(--green)"></div>FORD-methode</div>
+      <div class="sb-item" onclick="showBlock('ninja','b-flow',this)"><div class="sb-dot" style="background:var(--navy)"></div>Flow & ochtendritueel</div>
+      <div class="sb-item" onclick="showBlock('ninja','b-8x8',this)"><div class="sb-dot" style="background:var(--amber)"></div>8×8 campagne</div>
+      <div class="sb-item" onclick="showBlock('ninja','b-consultatie',this)"><div class="sb-dot" style="background:var(--purple)"></div>Consultatie 4 stappen</div>
+    </div>
+  </div>
+
+</div><!-- /sidebar -->
+
+<div class="main">
+
+<!-- ══════════════════════════════════════════
+     FASE 1 — DAG 1-30
+══════════════════════════════════════════ -->
+<div id="page-fase1" class="page-section active">
+
+  <div class="section-header">
+    <div class="section-tag">Fase 1 · Trainee Level 1 · 35% courtage</div>
+    <div class="section-title">Jouw eerste 30 dagen bij MVA</div>
+    <div class="section-sub">Van KVK tot eerste koopovereenkomst. Fundament, gewoonten, systemen en eerste bezichtiging.</div>
+    <div class="section-meta">
+      <span class="meta-badge">Begeleider: Ton + Monique + Hans</span>
+      <span class="meta-badge">Mentorgesprek: wekelijks dinsdag</span>
+      <span class="meta-badge">Max 7 maanden Level 1</span>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-item"><div class="kpi-num">50</div><div class="kpi-label">Namen in Cloze</div></div>
+    <div class="kpi-item"><div class="kpi-num">30</div><div class="kpi-label">Dagen doorlooptijd</div></div>
+    <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">Min. transacties Level 1</div></div>
+    <div class="kpi-item"><div class="kpi-num">35%</div><div class="kpi-label">Courtage Level 1</div></div>
+  </div>
+
+  <!-- 1.1 FORMALITEITEN -->
+  <div id="b-formaliteiten" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-formaliteiten')">
+      <div><div class="cb-title">1.1 Formaliteiten & 90-Dagen Opstartplan</div><div class="cb-sub">KVK · BTW · Bank · Agentenovereenkomst · BG Accountants · Snelstart · Volledig onboardingplan</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <div class="warn-box"><strong>Eerst regelen voordat je begint:</strong> zonder KVK, BTW-nummer en bankrekening kun je geen facturen sturen of ontvangen.</div>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:10px;">Formaliteiten — week 1</div>
+      <ul class="checklist">
+        <li>Agentenovereenkomst + TAAM-addendum + bijlagen A t/m I digitaal ondertekenen</li>
+        <li>Leerling-mentorschap overeenkomst afspreken met trainee en mentor</li>
+        <li>Kopie paspoort aanleveren bij kantoor (franchisenemersdossier)</li>
+        <li>KVK inschrijving — eenmanszaak of BV, doorgeven aan kantoormanagement</li>
+        <li>Zakelijke bankrekening openen — doorgeven aan Johan Vast</li>
+        <li>BTW-nummer aanvragen — doorgeven aan Johan + José Valencia</li>
+        <li>VOG aanvragen via VBO + inleveren bij Makelaarsvan</li>
+        <li>Tekenen 'member profile' voor inschrijven bij Makelaarsvan.nl</li>
+        <li>Verklaring omtrent gedrag aanvragen bij VBO</li>
+        <li>Belafspraak BG Accountants (Scott Witteman) voor inrichten administratie</li>
+        <li>Snelstart account aanmaken + e-mailkoppeling instellen</li>
+        <li>Bankkoppeling leggen in Snelstart (zie Bijlage 3 SOP)</li>
+        <li>VBO persoonlijk lidmaatschap aanvragen via MVA</li>
+        <li>Kadaster online account aanvragen</li>
+      </ul>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:16px 0 10px;">ICT & Systemen — week 1</div>
+      <ul class="checklist">
+        <li>Goede laptop met Windows Professional via DTD-ICT</li>
+        <li>Jaarabonnement technologie: DTD-ICT · Cloze · EyeMove · Effytool · Nexxtmove</li>
+        <li>Belafspraak DTD-ICT voor installatie Office 365 account</li>
+        <li>MVA e-mailadres instellen op laptop + mobiele telefoon</li>
+        <li>Gezamenlijke mailboxen installeren: bezichtiging@ · amsterdam@ · leads.amsterdam@</li>
+        <li>Mobiel abonnement aanpassen naar onbeperkt bellen binnen Europa</li>
+        <li>VOIP telefoonnummer kiezen in overleg met kantoormanagement (020-nummer)</li>
+        <li>020-nummer vastleggen op de juiste plaatsen (website, Funda, visitekaartjes)</li>
+      </ul>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:16px 0 10px;">Introductie & Team — week 1–2</div>
+      <ul class="checklist">
+        <li>Sleutel (tag) ontvangen van het kantoor</li>
+        <li>Foto maken met team voor introductie naar eigen Makelaarsvan-kantoren + VBO netwerk</li>
+        <li>Voorstelmail maken aan alle medewerkers Makelaars van Amsterdam</li>
+        <li>Introductiemail naar alle collega's binnen het regiokantoor Amsterdam</li>
+        <li>Mentor aanwijzen + buddy zoeken bij ander team/kantoor</li>
+        <li>Afspraken vastleggen met mentor over begeleiding</li>
+      </ul>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:16px 0 10px;">Businessplan — week 1–3 (dag 4 met Hans)</div>
+      <ul class="checklist">
+        <li>Businessplanning voor het komende jaar maken</li>
+        <li>Exploitatiebegroting voor de komende vijf jaar</li>
+        <li>Doelen stellen: hoeveel verkopen · hoeveel aankopen · doorverwijzingen huur</li>
+        <li>Expertisebuurt kiezen (zie blok 1.6)</li>
+        <li>MVA Financieel Plan Excel invullen (alle lichtblauwe cellen)</li>
+      </ul>
+
+      <div class="info-box"><strong>Rollen financieel:</strong> Scott Witteman (BG Accountants) = eindverantwoordelijke externe accountant · Johan Vast = interne boekhouder MVA · José Valencia (Pro Vastgoedgroep) = afdracht nota's en kostennota's · Hans Koppes = directie + bedrijfskundig adviseur bij kwartaalcijfers</div>
+
+      <div class="info-box"><strong>Volledig onboardingplan:</strong> Dit 90-dagenplan moet volledig afgehandeld zijn binnen 3 maanden. Bij elk afgevinkt punt zet je de datum van afhandeling. De lijst is niet lineair — sommige punten komen eerder dan andere. Meld het als er een punt mist of onduidelijk is.</div>
+    </div>
+  </div>
+
+  <!-- 1.2 SYSTEMEN -->
+  <div id="b-systemen" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-systemen')">
+      <div><div class="cb-title">1.2 Basis Systemen</div><div class="cb-sub">Laptop · Office 365 · Cloze · Realworks · Effytool · EyeMove · Intranet · Instructievideo's Monique</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Systeem</th><th>Wat je doet</th><th>Wie helpt</th></tr>
+        <tr><td><strong>Laptop + Windows</strong></td><td>Aanvragen via DTD-ICT, Office 365 installeren</td><td>DTD-ICT</td></tr>
+        <tr><td><strong>MVA e-mailadres</strong></td><td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4f212e2e220f222e242a232e2e3d3c392e21612e223c3b2a3d2b2e22">[email&#160;protected]</a> instellen op laptop + telefoon</td><td>DTD-ICT</td></tr>
+        <tr><td><strong>Gezamenlijke mailboxen</strong></td><td>bezichtiging@ · amsterdam@ · leads.amsterdam@ installeren</td><td>Ton</td></tr>
+        <tr><td><strong>Cloze</strong></td><td>Account aanmaken + app installeren + eerste 50 namen invoeren</td><td>Hans/Ton</td></tr>
+        <tr><td><strong>Realworks</strong></td><td>Account aanmaken, profiel instellen — zie instructievideo's hieronder</td><td>Monique</td></tr>
+        <tr><td><strong>Effytool</strong></td><td>Account aanmaken, relatie importeren — zie instructievideo hieronder</td><td>Monique</td></tr>
+        <tr><td><strong>EyeMove</strong></td><td>Account + vestigingsprofiel aanmaken</td><td>Monique</td></tr>
+        <tr><td><strong>Snelstart</strong></td><td>Account inrichten met Johan, e-mailkoppeling + bankkoppeling</td><td>Johan Vast</td></tr>
+        <tr><td><strong>Intranet SharePoint</strong></td><td>Mappenstructuur leren, schema makelaar van dienst vinden</td><td>Ton</td></tr>
+        <tr><td><strong>WhatsApp groepen</strong></td><td>Toevoegen aan kantoorgroep + sneak preview groep</td><td>Ton</td></tr>
+      </table>
+      <div class="info-box"><strong>Tip:</strong> Plan in week 1 een belafspraak met DTD-ICT voor installatie. Cloze is het allerbelangrijkste systeem — begin hier meteen mee.</div>
+
+      <div style="font-size:13px;font-weight:700;margin:18px 0 10px;">🎬 Instructievideo's Monique — Realworks & Effytool</div>
+      <div class="info-box">Bekijk deze video's in volgorde. Ze zijn gemaakt door Monique en laten stap voor stap zien hoe je de systemen gebruikt. Vraag Monique om de videobestanden als je ze nog niet hebt ontvangen.</div>
+
+      <table class="data-table">
+        <tr><th>#</th><th>Video</th><th>Duur</th><th>Wat je leert</th></tr>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><strong>Realworks Algemeen — waar vind je wat</strong></td>
+          <td>3:50</td>
+          <td>
+            Rondleiding door Realworks: hoofdmenu, navigatie linkerzijbalk, agenda, dossiers, documenten en snelkoppelingen.<br>
+            <span style="font-size:11px;color:var(--mid);">👉 Begin hier als je Realworks nog nooit hebt gebruikt</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><strong>Hoe werkt de e-mail in Realworks</strong></td>
+          <td>3:08</td>
+          <td>
+            Inbox weergave · bericht openen · e-mail opstellen · verzendopties instellen · gekoppelde items bekijken.<br>
+            <span style="font-size:11px;color:var(--mid);">👉 Stap 2 na de algemene rondleiding</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><strong>Emailbox toevoegen in Realworks</strong></td>
+          <td>1:28</td>
+          <td>
+            Extra e-mailaccount of mailbox toevoegen: e-mailoverzicht openen → account kiezen → instellingen invullen of bevestigen.<br>
+            <span style="font-size:11px;color:var(--mid);">👉 Doe dit als je de gezamenlijke mailboxen wil instellen</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><strong>Taken met de instructies in Realworks</strong></td>
+          <td>1:30</td>
+          <td>
+            Taken en instructies beheren: taken-/dossieroverzicht openen → item selecteren → instructietekst toevoegen of aanpassen → opslaan.<br>
+            <span style="font-size:11px;color:var(--mid);">👉 Relevant voor de workflow stappen — taken aanmaken per dossier</span>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><strong>Relatie importeren in Effytool</strong></td>
+          <td>1:20</td>
+          <td>
+            Relatie vanuit Realworks overnemen naar Effytool: relatiekaart in Realworks bekijken → gegevens noteren → schakelen naar Effytool → relatievelden invullen of aanvullen.<br>
+            <span style="font-size:11px;color:var(--mid);">👉 Doe dit bij WF 1 (aankoopgesprek ingepland) en VK WF 3 (OTD getekend)</span>
+          </td>
+        </tr>
+      </table>
+
+      <div style="font-size:13px;font-weight:700;margin:18px 0 10px;">🎬 Instructievideo's Monique — Realworks Aankoopproces & Agenda</div>
+      <div class="info-box">Deze video's zijn specifiek voor het aankoopproces — gebruik ze naast de Aankoop Workflows (blok 1.8 en het Workflows document).</div>
+      <table class="data-table">
+        <tr><th>#</th><th>Video</th><th>Wat je leert</th><th>Gebruik bij</th></tr>
+        <tr><td><strong>1</strong></td><td><strong>Aanmaken relatie in Realworks</strong></td><td>Relatietype kiezen → persoonlijke + contactgegevens invullen → adresgegevens vastleggen</td><td>WF 1 — aankoopgesprek ingepland</td></tr>
+        <tr><td><strong>2</strong></td><td><strong>Aanmaken aankoopopdracht</strong></td><td>Nieuwe aankoopopdracht starten → relatie koppelen → opdrachtgegevens (project, categorie, budget) invullen</td><td>WF 2 — OTD getekend</td></tr>
+        <tr><td><strong>3</strong></td><td><strong>Aanmaken zoekopdracht</strong></td><td>Zoekprofiel opbouwen: filters + woonwensen → prijsklasse, woningtype, kenmerken → zoekgebied op kaart</td><td>WF 3 — zoekersprofiel aanmaken</td></tr>
+        <tr><td><strong>4</strong></td><td><strong>Afspraak inplannen in de agenda</strong></td><td>Type afspraak kiezen → relatie koppelen → datum/tijd/inhoud invullen → opslaan of mail voorbereiden</td><td>WF 1 — gesprek inplannen</td></tr>
+        <tr><td><strong>5</strong></td><td><strong>Aankoopbezichtiging zoeken in agenda</strong></td><td>Bestaande bezichtiging terugvinden: filters gebruiken → zoeken op relatie of type → resultaat controleren</td><td>Dagelijks agendabeheer</td></tr>
+        <tr><td><strong>6</strong></td><td><strong>Inplannen aankoopbezichtiging</strong></td><td>Vanuit aankoopopdracht bezichtiging inplannen: type → datum, tijd, locatie, relatie vastleggen</td><td>WF 3 — bezichtigingen plannen</td></tr>
+        <tr><td><strong>7</strong></td><td><strong>Pand toevoegen bij bezichtiging (AK 3.0)</strong></td><td>Pand zoeken via adres → object koppelen aan aankoopdossier</td><td>WF 5 — na bezichtiging</td></tr>
+        <tr><td><strong>8</strong></td><td><strong>Aangekocht pand toevoegen in dossier (AK 4.2)</strong></td><td>Object koppelen aan dossier → objectkaart controleren → details vastleggen</td><td>WF 5 — bod geaccepteerd</td></tr>
+      </table>
+
+      <div class="warn-box"><strong>Nog te komen van Monique:</strong> Effytool OTD aankoop + verkoop aanmaken · Homeshow woning gereedmaken · Conceptfactuur aanmaken · Yisual account + eerste post.</div>
+
+      <div style="font-size:13px;font-weight:700;margin:18px 0 10px;">🎬 Instructievideo's Monique — Effytool Documenten & Informatie</div>
+      <table class="data-table">
+        <tr><th>#</th><th>Video</th><th>Wat je leert</th><th>Gebruik bij</th></tr>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><strong>Effytool — vinden van documenten en informatie</strong></td>
+          <td>
+            Menu Informatie openen → door categorieën bladeren (Praktijkregels, HR &amp; Training, kennisrubrieken) → documenten zoeken via zoekbalk → intakeformulieren opzoeken → smart documenten openen → documentdetail bekijken (titel, toelichting, keywords, bestand, categorie).<br>
+            <span style="font-size:11px;color:var(--mid);">👉 Begin hier als je iets zoekt in Effytool — handleidingen, formulieren en interne informatie staan hier allemaal</span>
+          </td>
+          <td>Altijd — wegwijzer in Effytool</td>
+        </tr>
+      </table>
+
+      <div class="warn-box"><strong>Nog te komen van Monique:</strong> Effytool OTD aankoop + verkoop aanmaken · Homeshow woning gereedmaken · Conceptfactuur aanmaken · Yisual account + eerste post.</div>
+    </div>
+  </div>
+
+  <!-- 1.3 NINJA SELLING -->
+  <div id="b-ninja" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ninja')">
+      <div><div class="cb-title">1.3 Ninja Selling — Fundament & Video Bibliotheek</div><div class="cb-sub">4 principes · Ochtendritueel · Ninja Nine · 30 video's op Ninja You · Ton Coffeng</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Ninja Selling kernprincipe</div>
+        <div class="ninja-quote">"Wees wie je bent. Mensen kopen van mensen die ze kennen, vertrouwen en leuk vinden. Jij hoeft geen verkoper te zijn — jij bent een probleemoplosser."</div>
+        <div class="ninja-attr">— Larry Kendall, Ninja Selling · Vertaling Ton Coffeng</div>
+      </div>
+
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Lees hoofdstukken 1–10</div><div class="step-desc">De 4 principes: Wees wie je bent · Bouw relaties · Geef waarde · Vraag om business</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Installeer het ochtendritueel (dag 3)</div><div class="step-desc">Elke ochtend: dankbaarheidslijst · focustaak · Ninja Nine planning · 1 handgeschreven notitie</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Maak je 50-namenlijst (dag 5)</div><div class="step-desc">Iedereen die je kent in Cloze invoeren met FORD-notities</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Leer FORD (dag 7)</div><div class="step-desc">Family · Occupation · Recreation · Dreams — in elk gesprek, nooit direct verkopen</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">Start Ninja Nine dagelijks (dag 10)</div><div class="step-desc">2 persoonlijke notities · 5 telefoongesprekken · 1 persoonlijk bezoek · 1 aanbeveling vragen</div></div></div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;margin:18px 0 6px;">Aanbevolen startvolgorde — bekijk dit als eerste</div>
+      <div class="info-box">
+        <strong>1.</strong> <a href="https://ninjaselling.com/what-is-ninja-selling/" target="_blank" style="color:var(--blue);">What is Ninja Selling</a> — basisuitleg van het systeem · startpunt voor elke nieuwe makelaar<br>
+        <strong>2.</strong> <a href="https://you.ninjaselling.com/lessons/the-ninja-nine-review/" target="_blank" style="color:var(--blue);">The Ninja Nine Review</a> — overzicht van alle 9 habits, de backbone van het systeem<br>
+        <strong>3.</strong> <a href="https://you.ninjaselling.com/lessons/the-ninja-buyer-process-demonstration/" target="_blank" style="color:var(--blue);">The Ninja Buyer Process Demonstration</a> — Peter Parnegg demonstreert het volledige aankoopproces (~20 min)<br>
+        <strong>4.</strong> <a href="https://you.ninjaselling.com/lessons/the-ninja-listing-consultation-demonstration/" target="_blank" style="color:var(--blue);">The Ninja Listing Consultation Demonstration</a> — live demonstratie van de 16 Step Seller Process<br>
+        <strong>5.</strong> <a href="https://you.ninjaselling.com/lessons/the-pre-listing-interview-demonstration/" target="_blank" style="color:var(--blue);">The Pre-Listing Interview Demonstration</a> — Don Tennessen in een live role play
+      </div>
+
+      <div style="font-size:13px;font-weight:700;margin:16px 0 8px;">🎥 Alle Ninja video's — per categorie</div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Basis & Overzicht</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td>What is Ninja Selling</td><td>Basisuitleg van het systeem en gedachtengoed — ideaal startpunt</td><td><a href="https://ninjaselling.com/what-is-ninja-selling/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Videos — Ninja Selling</td><td>Officieel video-overzicht als centrale startpagina</td><td><a href="https://ninjaselling.com/videos/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Welcome to the Ninja Path</td><td>Introductie tot de Ninja Path en de leeromgeving</td><td><a href="https://you.ninjaselling.com/lessons/welcome-to-the-ninja-path/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Kopers begeleiden — Buyer Process</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td><strong>The Ninja Buyer Process Demonstration ⭐</strong></td><td>Peter Parnegg demonstreert het Buyer Interview + Funnel Process volledig (~20 min) — sterkste praktijkvideo</td><td><a href="https://you.ninjaselling.com/lessons/the-ninja-buyer-process-demonstration/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Why do the 10 Step Buyer Process</td><td>Larry legt uit waarom dit systeem essentieel is in een snelle markt · 4 angsten van kopers · role play (min 14:04)</td><td><a href="https://you.ninjaselling.com/lessons/why-do-the-10-step-buyer-process/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>The Zoom Buyer Process</td><td>Hoe je het volledige buyer process op afstand via Zoom uitvoert — handig voor expats en internationale kopers</td><td><a href="https://you.ninjaselling.com/lessons/the-zoom-buyer-process/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>The Evolution of the Buyer Process</td><td>Verdieping op hoe het buyer process zich heeft ontwikkeld</td><td><a href="https://you.ninjaselling.com/lessons/the-evolution-of-the-buyer-process/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Working with Buyers in a Sellers Market</td><td>Masterclass: kopers begeleiden bij concurrentie en multiple offers</td><td><a href="https://you.ninjaselling.com/lessons/working-with-buyers-in-a-sellers-market/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Help Buyers manage the competition</td><td>Marktdata, scattergrams en appreciation-graphs gebruiken bij vragen als "bied ik te veel?"</td><td><a href="https://you.ninjaselling.com/lessons/help-buyers-successfully-manage-the-competition/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Het 85% Perfecte Huis</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td>The 85% Perfect House</td><td>Uitleg van het Ninja-concept: een huis hoeft niet 100% perfect te zijn om het juiste huis te zijn</td><td><a href="https://you.ninjaselling.com/lessons/the-85-perfect-house/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>How to present the 85% Perfect House</td><td>Hoe je dit concept presenteert in een buyer consultation — met meerdere role plays</td><td><a href="https://you.ninjaselling.com/lessons/how-to-present-the-85-perfect-house/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Verkopers begeleiden — Listing Process</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td><strong>The Ninja Listing Consultation Demonstration ⭐</strong></td><td>Live demonstratie van de volledige 16 Step Seller Process — meest complete verkoopvideo</td><td><a href="https://you.ninjaselling.com/lessons/the-ninja-listing-consultation-demonstration/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>The Pre-Listing Interview Demonstration</td><td>Don Tennessen demonstreert de Pre-Listing Interview live (inclusief PDF-resource)</td><td><a href="https://you.ninjaselling.com/lessons/the-pre-listing-interview-demonstration/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Listing Appointment Pre Game Prep</td><td>Mentale voorbereiding vlak vóór een listing appointment — gefocust het gesprek ingaan</td><td><a href="https://you.ninjaselling.com/lessons/listing-appointment-pre-game-prep/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>The Calendar Question (Stap 4)</td><td>Verdieping op stap 4 van de 16 Step Seller Process — de Calendar Question</td><td><a href="https://you.ninjaselling.com/lessons/the-calendar-question/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Two Hard Questions from a Seller</td><td>Elegante antwoorden op lastige vragen zoals "hoe lang zit je al in het vak?"</td><td><a href="https://you.ninjaselling.com/lessons/two-hard-questions-from-a-seller/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Working Your Listing</td><td>Hoe je actief met een staande listing blijft werken</td><td><a href="https://you.ninjaselling.com/lessons/working-your-listing/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Listings genereren</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td>Finding Inventory: Generating Listings the Ninja Way</td><td>5 concrete acties om listings te genereren via relatieopbouw — geen pushen</td><td><a href="https://you.ninjaselling.com/lessons/finding-inventory-generating-listings/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>What is the best way to find listings?</td><td>Listings vinden + sterk antwoord geven op "How's the market?" · FORD-call voorbeeld (min 7:03)</td><td><a href="https://you.ninjaselling.com/lessons/what-is-the-best-way-to-find-listings/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Ninja Nine & Dagelijkse Discipline</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td><strong>The Ninja Nine Review ⭐</strong></td><td>Overzicht van alle 9 habits — de backbone van het systeem</td><td><a href="https://you.ninjaselling.com/lessons/the-ninja-nine-review/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>The Ninja Nine As One Thing</td><td>Hoe de 9 habits samen één systeem vormen · gratitude en 50 live contacts</td><td><a href="https://you.ninjaselling.com/lessons/the-ninja-nine-as-one-thing/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Book Club Lesson 18 — Weekly Habits 8 & 9</td><td>Larry bespreekt habit 8 en 9 met verwijzing naar het boek</td><td><a href="https://you.ninjaselling.com/lessons/book-club-lesson-18/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Your Hot and Warm List</td><td>Verdieping op habit 4 & 5 — Hot List en Warm List beheren zodat kansen niet verdwijnen</td><td><a href="https://you.ninjaselling.com/lessons/your-hot-and-warm-list/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Ninja Business Tracker</td><td>Praktische uitleg van de Business Tracker gekoppeld aan de Ninja 9</td><td><a href="https://you.ninjaselling.com/lessons/ninja-business-tracker/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Action Tip — Work The System</td><td>Hoe je je acties trackt en de Ninja 9 gamificeert</td><td><a href="https://you.ninjaselling.com/lessons/action-tip-work-the-system/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>The Secret to Staying Motivated</td><td>Gemotiveerd blijven via community, skill training en de Ninja 9</td><td><a href="https://you.ninjaselling.com/lessons/the-secret-to-staying-motivated/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+        <tr><td>Action Tip #499 — The Problem Is The Solution</td><td>Korte reminder: de oplossing zit in consequent uitvoeren van de volledige Ninja 9</td><td><a href="https://you.ninjaselling.com/lessons/action-tip-499/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Gesprekstechniek & Mindset</div>
+      <table class="data-table">
+        <tr><th>Video</th><th>Wat leer je</th><th>Link</th></tr>
+        <tr><td>What does "Interview" mean?</td><td>Larry legt het verschil uit tussen interviewing en selling · Law of Precession · Stop Selling</td><td><a href="https://you.ninjaselling.com/lessons/what-does-interview-mean/" target="_blank" style="color:var(--blue);">→ Bekijken</a></td></tr>
+      </table>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 6px;">Officiële kanalen</div>
+      <div class="info-box">
+        🎬 <a href="https://www.youtube.com/@NinjaSelling" target="_blank" style="color:var(--blue);">Ninja Selling YouTube-kanaal</a> — wekelijkse Ninja Tips, opnames en clips<br>
+        🎓 <a href="https://you.ninjaselling.com" target="_blank" style="color:var(--blue);">Ninja You platform</a> — volledige catalogus · complimentary lessons · programma's<br>
+        🎙️ <a href="https://ninjaselling.com/podcasts/" target="_blank" style="color:var(--blue);">Ninja Selling Podcast</a> — wekelijkse afleveringen over Ninja technieken<br>
+        📘 <a href="https://ninjaselling.com" target="_blank" style="color:var(--blue);">NinjaSelling.com</a> — officiële website · installaties · coaching<br>
+        🎬 <a href="https://www.youtube.com/watch?v=HYFcTNmwHZI" target="_blank" style="color:var(--blue);">Marktbewerking video 1</a> · <a href="https://www.youtube.com/watch?v=Y0JwmMIBJhc" target="_blank" style="color:var(--blue);">Marktbewerking video 2</a>
+      </div>
+
+      <div class="warn-box"><strong>Let op:</strong> De Ninja You video's zijn publiek vindbaar maar sommige vragen om inloggen afhankelijk van je abonnement. Vraag Ton om toegang tot Ninja You als je die nog niet hebt.</div>
+    </div>
+  </div>
+
+  <!-- 1.4 DATABASE -->
+  <div id="b-database" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-database')">
+      <div><div class="cb-title">1.4 Database & 50 Namen</div><div class="cb-sub">Cloze segmentatie · A/B/C · 8×8 campagne starten</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Categorie</th><th>Wie</th><th>Actie</th><th>Frequentie</th></tr>
+        <tr><td><strong style="color:var(--green)">A — Hot</strong></td><td>Actief op zoek, wil binnenkort kopen/verkopen</td><td>Wekelijks contact</td><td>1×/week</td></tr>
+        <tr><td><strong style="color:var(--amber)">B — Warm</strong></td><td>Interesse, maar niet acuut</td><td>Maandelijks contact</td><td>1×/maand</td></tr>
+        <tr><td><strong style="color:var(--blue)">C — Database</strong></td><td>Iedereen die je kent</td><td>36 contactmomenten/jaar</td><td>3×/maand</td></tr>
+      </table>
+      <div class="info-box"><strong>8×8 campagne:</strong> Stuur de eerste 8 weken 1× per week iets waardevols naar je 50 namen. Geen verkoop — alleen waarde. Marktupdate, artikel, persoonlijk berichtje, handgeschreven kaartje.</div>
+
+      <div class="success-box">
+        <strong>🔗 ACES Profielscan — doe de test voordat je begint</strong><br>
+        Voordat je jouw eerste klantgesprekken voert, doe je de ACES-test. Die geeft jou én je mentor inzicht in jouw gedragsprofiel — hoe jij communiceert, wat je sterke kanten zijn en waar je aandacht aan moet geven.<br><br>
+        <a href="https://a-c-e-s-test.netlify.app/" target="_blank" style="color:var(--blue);font-weight:700;font-size:13px;">→ a-c-e-s-test.netlify.app</a><br>
+        <span style="font-size:11px;color:var(--mid);">Werkt op telefoon, tablet en computer · ~10 minuten · resultaat direct zichtbaar</span>
+      </div>
+
+  <!-- 1.5 LEADDISTRIBUTIE -->
+  <div id="b-leads" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-leads')">
+      <div><div class="cb-title">1.5 Leaddistributie, Callscript & Leadpool</div><div class="cb-sub">Volgorde: voorkeur → wijk → dienst · Callscript bezichtigingen · 14 ontevreden kopers per opdracht</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+
+      <div class="info-box"><strong>De gouden rekensom:</strong> Elke verkoopopdracht genereert gemiddeld <strong>30 bezichtigingsaanvragen → 15 gekwalificeerde kopers → 1 uiteindelijke koper → 14 teleurgestelde kopers</strong> die zonder makelaar weggaan. Dit zijn jouw warme leads. Bel ze altijd na.</div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--orange)">1</div>
+          <div class="step-content"><div class="step-title">Voorkeursmakelaar gaat altijd voor</div><div class="step-desc">Klant vraagt naar specifieke makelaar → altijd doorverwijzen, ook als jij van dienst bent</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--blue)">2</div>
+          <div class="step-content"><div class="step-title">Wijkmakelaar (postcode)</div><div class="step-desc">Geen voorkeur → kijk welke makelaar het postcodegebied heeft op het intranet</div></div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--green)">3</div>
+          <div class="step-content"><div class="step-title">Makelaar van dienst (schema)</div><div class="step-desc">Geen wijkmakelaar → verdeel via het dienstrooster op het intranet</div></div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;margin:16px 0 10px;">Callscript bezichtigingen — volledig uitgewerkt</div>
+
+      <div class="script-box">
+        <div class="script-label">Opening</div>
+        <div class="script-line">"Goedag[deel], u spreekt met [naam] van Makelaars van Amsterdam. Bel ik u gelegen?"<br><em style="color:rgba(255,255,255,.5);font-size:11px;">(Controleer of je de juiste persoon aan de lijn hebt)</em></div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Aanleiding</div>
+        <div class="script-line">"U heeft enige tijd geleden gereageerd op [adres]. Wij bellen u even om u op de hoogte te brengen dat het pand verkocht is. Mogen wij u enige vragen stellen? <strong>Werkt u met een aankoopmakelaar?</strong>"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Als JA — aankoopmakelaar</div>
+        <div class="script-line">Netjes afronden. Geen acquisitie plegen.</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Als NEE — geen aankoopmakelaar</div>
+        <div class="script-line">"Kunnen wij u helpen bij het zoeken van een woning?"<br><br>Bij interesse: "Heeft u al hypotheekadvies ingewonnen?"<br><br><strong>Als NEE:</strong> "Omdat financiering belangrijk is bij aankoop krijgt iedere klant een gratis telefonisch intake gesprek. De hypotheekadviseur neemt zelf binnen 48 uur contact met u op."<br><br><strong>Als JA, maar niet recent of geen OTD getekend:</strong> Voordelen aankoopmakelaar benoemen:<br>1. Wij onderhandelen voor de koper<br>2. Wij checken alle stukken<br>3. Wij kennen de markt en andere makelaars waardoor wij er makkelijker tussen komen<br><br>→ Doorverwijzen naar aankoopmakelaar voor afspraak</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Twee verplichte vragen bij elk gesprek</div>
+        <div class="script-line">A. "<strong>Heeft u een voorkeur voor een bepaalde makelaar of kent u al iemand bij ons?</strong>"<br>B. "<strong>Wat is uw postcode en om welk adres gaat het?</strong>"</div>
+      </div>
+
+      <div class="warn-box"><strong>Belangrijk:</strong> Je beantwoordt géén inhoudelijke vragen (prijsinschattingen, strategie, planning). Je registreert de lead en zorgt dat hij bij de juiste makelaar terechtkomt.</div>
+      <div class="info-box"><strong>Na elk gesprek verplicht:</strong> Telefoonnotitie invullen via intranet → automatisch naar juiste makelaar + koppeling Cloze. Minimaal: naam · telefoonnummer · e-mail · adres/postcode · reden contact · urgentie.</div>
+
+      <!-- INTRANET & TELEFOONNOTITIE BLOK -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px 24px;margin:20px 0;">
+        <div style="font-size:13px;font-weight:700;color:var(--orange);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;">📋 Intranet — Dagelijkse werkprocedure</div>
+
+        <div style="font-size:13px;color:rgba(255,255,255,.6);margin-bottom:16px;">
+          Het intranet (<strong style="color:white">intranet.makelaars-in-amsterdam.nl</strong>) is jouw dagelijkse werkplek voor het verwerken van inkomende leads. Je account wordt aangemaakt door <strong style="color:white">Grip Multi Media</strong> — vraag dit op dag 1.
+        </div>
+
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Stap-voor-stap: inkomend telefoongesprek verwerken</div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--orange)">1</div>
+            <div class="step-content">
+              <div class="step-title">Vraag postcode en adres op</div>
+              <div class="step-desc">"Wat is het adres en de postcode?" — dit bepaalt welke makelaar de lead krijgt. Vraag dit altijd als eerste, ook als de klant al een voorkeur heeft.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--blue)">2</div>
+            <div class="step-content">
+              <div class="step-title">Check de postcodes per makelaar op intranet</div>
+              <div class="step-desc">Ga naar <em>Postcodes per makelaar</em> op het intranet. Zoek op de postcode — staat er een naam bij? Dat is de wijkmakelaar en krijgt de lead.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--green)">3</div>
+            <div class="step-content">
+              <div class="step-title">Geen wijkmakelaar? Check het lead distributie schema</div>
+              <div class="step-desc">Ga naar <em>Lead distributie schema</em> op het intranet. Bekijk wie er nu van dienst is — die makelaar krijgt de lead. Schema loopt 24/7 door met blokken van 4 uur per makelaar.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--navy)">4</div>
+            <div class="step-content">
+              <div class="step-title">Heeft klant al een vaste makelaar bij MVA? Die gaat altijd voor</div>
+              <div class="step-desc">Vraag: "Kent u al een makelaar bij ons?" — als de klant een naam noemt gaat de lead altijd naar die makelaar, ongeacht postcode of dienst.</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--amber)">5</div>
+            <div class="step-content">
+              <div class="step-title">Vul het Telefoonnotitie formulier in op intranet</div>
+              <div class="step-desc">
+                Ga naar <em>Telefoonnotitie</em> en vul in:<br>
+                <span style="font-size:12px;color:rgba(255,255,255,.7);">
+                  📌 Welk pand/adres · Kent u al een makelaar? · Reden inbellen · Hoe binnengekomen · Aanhef + naam + bedrijf · E-mail · Telefoonnummer · Resultaat gesprek · Taal (NL/EN) · Opmerkingen
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purple)">6</div>
+            <div class="step-content">
+              <div class="step-title">Verstuur — de lead gaat automatisch naar de juiste makelaar</div>
+              <div class="step-desc">Na versturen ontvangt de betreffende makelaar een melding. De lead wordt ook automatisch gekoppeld aan Cloze. Jij hoeft verder niets te doen — tenzij de makelaar niet reageert.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;font-size:13px;font-weight:700;margin-bottom:8px;">Reden inbellen — mogelijke opties in het formulier</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:rgba(255,255,255,.65);">
+          <div>📞 Inplannen bezichtiging</div><div>🏠 Aankoop</div>
+          <div>💶 Verkoop</div><div>🔄 Combinatie verkoop/aankoop</div>
+          <div>💰 Afdeling finance</div><div>📣 Afdeling marketing</div>
+          <div>🏢 Kantoororganisatie</div><div>📋 Overig</div>
+        </div>
+
+        <div style="margin-top:16px;font-size:13px;font-weight:700;margin-bottom:8px;">Hoe kwam de klant bij ons terecht — altijd invullen</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:rgba(255,255,255,.65);">
+          <div>👥 Ambassadeurs (Database)</div><div>📍 Area of expertise geografisch</div>
+          <div>🔍 Area of expertise (Kennisgebied)</div><div>💳 Bestaande klanten (Database)</div>
+          <div>🏦 De Hypotheekshop</div><div>📲 Externe leadproviders (Makelaarwijzer)</div>
+          <div>🌐 Externe leadproviders (Overig)</div><div>🏷️ For Sale by Owner</div>
+          <div>📅 Makelaar van dienst & kantoormarketing</div><div>🌐 Makelaarsvan.nl</div>
+          <div>🎁 Pandpromotie</div><div>🤝 Personal branding</div>
+          <div>⭐ Referrals</div><div>🗣️ Sfeer van invloed (Database)</div>
+          <div>📱 Social Media Campagne</div><div>👤 Via één van onze makelaars</div>
+        </div>
+
+        <div style="margin-top:16px;padding:12px 16px;background:rgba(201,168,76,0.1);border-left:3px solid #C9A84C;border-radius:4px;font-size:13px;">
+          <strong style="color:#E8C97A;">Het intranet heeft ook een Instructies-sectie</strong> met uitgewerkte briefings voor: jouw makelaarspagina-tekst · expertisepagina · makelaars blog · fotografie specificaties · profielteksten woningzoekers · aanpak binnenkomende leads. Lees deze door in week 1.
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;margin:16px 0 10px;">Leadpool — wat klanten verwachten van een makelaar</div>
+      <div class="info-box">
+        <strong>5 verwachtingen die klanten altijd noemen:</strong><br>
+        1. <strong>Snelheid</strong> — snel reageren, geen dagen wachten<br>
+        2. <strong>Volledige service en gemak</strong> — ontzorgen<br>
+        3. <strong>Pro-activiteit</strong> — jij belt hen, niet andersom<br>
+        4. <strong>Transparantie</strong> — eerlijk over kansen én risico's<br>
+        5. <strong>Deskundigheid</strong> — marktkennis, juridische kennis, netwerk<br><br>
+        <strong>Grootste kans:</strong> Stille verkoop / off-market · Samenwerking makelaars onderling · Aankoopmakelaar zijn voor teleurgestelde kopers uit andere transacties
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.6 EXPERTISEBUURT -->
+  <div id="b-buurt" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-buurt')">
+      <div><div class="cb-title">1.6 Expertisebuurt & Focusgebied</div><div class="cb-sub">±3.000 woningen · Omzetverwachting · Overleg Ton · Roderick (Grip) · Geographic farm</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>Waarom een expertisebuurt?</strong> Als jij de specialist bent van een postcodegebied herken je elke straat, ken je de transactiehistorie en word je de go-to makelaar voor die buurt. Dit noemen we ook wel een "geographic farm" — je oogst waar je zaait.</div>
+
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Open Excel "postcodeverdeling"</div><div class="step-desc">Kies een postcodegebied dat approximately 3.000 woningen bevat. Te groot = te duur, te klein = te weinig omzetpotentieel.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Overleg met Ton — is het vrij?</div><div class="step-desc">Check op intranet of het postcodegebied al bezet is door een andere makelaar. Vrij gebied = jouw kans.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Bereken omzetverwachting</div><div class="step-desc">Open Excel "Omzetverwachting geographic farm Amsterdamse wijkspecialist" + "stadswijken plus koopwoningen". Vul alle gegevens in om de verwachte potentiële omzet te berekenen.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Akkoord Ton → doorgeven aan Roderick (Grip)</div><div class="step-desc">Grip zet het postcodegebied op intranet gekoppeld aan jouw naam. Wacht op bevestiging voordat je campagnes start.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">Fotoshoot in jouw buurt inplannen</div><div class="step-desc">Voor de MVA website — jij in jouw expertisebuurt. Monique plant dit in.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--purple)">6</div><div class="step-content"><div class="step-title">Buurtbewerking starten</div><div class="step-desc">Buurtmailings via Yisual · bewoners leren kennen · wekelijks door je buurt lopen · transacties bijhouden · top-of-mind worden.</div></div></div>
+      </div>
+
+      <div class="warn-box"><strong>Bestanden op SharePoint:</strong> Alle Excel bestanden staan op SharePoint onder "Stappenplan keuze postcodegebied per makelaar". Niet iedereen heeft toegang — vraag de vestigingsleider om toegang.</div>
+
+      <div style="font-size:13px;font-weight:700;margin:14px 0 8px;">Video's marktbewerking — Ninja Selling</div>
+      <div class="info-box">
+        Bekijk deze twee YouTube video's over geographic farming en buurtbewerking:<br>
+        🎬 <a href="https://www.youtube.com/watch?v=HYFcTNmwHZI" target="_blank" style="color:var(--blue);">youtube.com/watch?v=HYFcTNmwHZI</a><br>
+        🎬 <a href="https://www.youtube.com/watch?v=Y0JwmMIBJhc" target="_blank" style="color:var(--blue);">youtube.com/watch?v=Y0JwmMIBJhc</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1.7 YISUAL -->
+  <div id="b-yisual" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-yisual')">
+      <div><div class="cb-title">1.7 Yisual, Buurtmailing & Social Media</div><div class="cb-sub">Eigen Yisual account · Flyers op maat · Pre-sales workflow · Dominique + Kyra</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>Yisual</strong> is het systeem waarmee MVA gepersonaliseerde flyers maakt. Elke makelaar heeft een eigen account met zijn/haar foto, naam en contactgegevens. Je bestelt via een invulformulier — Monique regelt de rest.</div>
+      <table class="data-table">
+        <tr><th>Campagnetype</th><th>Wanneer</th><th>Budget opties</th></tr>
+        <tr><td>Te koop · Nieuw in de verkoop</td><td>Bij publicatie woning</td><td>€70 / €150 / €250 / €350</td></tr>
+        <tr><td>Binnenkort te koop (Sneak Preview)</td><td>3×24u voor Funda</td><td>€70 / €150</td></tr>
+        <tr><td>Exclusief Open Huis</td><td>Week voor open huis</td><td>€150 / €250</td></tr>
+        <tr><td>Succesvol verkocht / Aangekocht</td><td>Na transport</td><td>€70 / €150</td></tr>
+        <tr><td>In prijs verlaagd</td><td>Bij prijsaanpassing</td><td>€70</td></tr>
+      </table>
+      <div class="success-box"><strong>Pre-sales workflow (automatisch):</strong> Zodra je een woning online zet → automatische mail → Dominique + Kyra maken social media posts → Monique regelt flyers. Advies: laat 3×24 uur zitten tussen je eigen woningwebsite en Funda publicatie.</div>
+    </div>
+  </div>
+
+  <!-- 1.8 AANKOOPPROCES -->
+  <div id="b-aankoop" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-aankoop')">
+      <div><div class="cb-title">1.8 Aankoopproces — Eerste stappen & Woonwensen</div><div class="cb-sub">Dag 9: meelopen · Dag 15: eigen bezichtiging · Dag 25: eerste KO · Woonwensen checklist</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">Dag 9</div><div class="step-content"><div class="step-title">Eerste bezichtiging meelopen</div><div class="step-desc">Loop mee met een ervaren makelaar. Observeer: hoe loopt hij door de woning, wat vraagt hij de klant, hoe bespreekt hij na.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">Dag 12</div><div class="step-content"><div class="step-title">Koperspakket leren samenstellen</div><div class="step-desc">Aankoopbrochure NL/UK · Klantenintakeformulier · Woonwensen checklist · Purchase Intake Form EN</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">Dag 15</div><div class="step-content"><div class="step-title">Eerste eigen bezichtiging</div><div class="step-desc">Zelfstandig bezichtiging leiden. Mentor is aanwezig maar grijpt niet in tenzij nodig.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">Dag 20</div><div class="step-content"><div class="step-title">Eerste intakegesprek aankoop</div><div class="step-desc">90 minuten met klant: FORD · woonwensen · budget · tijdlijn · OTD tekenen</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">Dag 25</div><div class="step-content"><div class="step-title">Eerste koopovereenkomst meemaken</div><div class="step-desc">Aanwezig zijn bij KO tekenen bij de notaris. Let op: ontbindende voorwaarden, waarborgsom, transportdatum.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--purple)">Dag 30</div><div class="step-content"><div class="step-title">Evaluatiegesprek met Ton</div><div class="step-desc">30-dagenplan doorlopen. Wat goed ging, wat beter kan. Eerste businessplan jaar 1 bespreken.</div></div></div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;margin:18px 0 10px;">Woonwensen checklist — gebruik bij elk intakegesprek</div>
+      <div class="info-box"><strong>Hoe gebruik je dit?</strong> Geef de klant het formulier vóór het gesprek of loop het samen door. Gebruik de antwoorden als basis voor het zoekersprofiel in Realworks. Vraag altijd door naar het <em>Waarom</em> achter elk Wat.</div>
+
+      <table class="data-table">
+        <tr><th>Categorie</th><th>Vragen</th></tr>
+        <tr>
+          <td><strong>Locatie</strong></td>
+          <td>Binnen of buiten de ring? · Welke stadsdelen/wijken? · Afstand tot werk? · Ken je de omgeving al?</td>
+        </tr>
+        <tr>
+          <td><strong>Buurt & omgeving</strong></td>
+          <td>Kindvriendelijk · Binnenstad · Nieuwbouw · Voorzieningen (scholen, OV, supermarkt, ziekenhuis)?</td>
+        </tr>
+        <tr>
+          <td><strong>Type woning</strong></td>
+          <td>Appartement / tussenwoning / hoekwoning / 2-kapper / vrijstaand? · Bestaand of nieuwbouw? · Klussen of instapklaar?</td>
+        </tr>
+        <tr>
+          <td><strong>Stijl & grootte</strong></td>
+          <td>Klassiek (jaren 30) of modern/strak? · Hoeveel m²? · Hoeveel slaapkamers minimaal?</td>
+        </tr>
+        <tr>
+          <td><strong>Must-haves</strong></td>
+          <td>Tuin (hoe groot?) · Balkon · Garage/schuur · Thuiskantoor · Open keuken · Open haard?</td>
+        </tr>
+        <tr>
+          <td><strong>Budget & tijdlijn</strong></td>
+          <td>Maximale koopprijs (na hypotheekgesprek) · Eigen geld beschikbaar? · Eigen woning te verkopen? · Gewenste verhuisdatum?</td>
+        </tr>
+      </table>
+
+      <div style="font-size:13px;font-weight:700;margin:18px 0 10px;">Klantdossier checklist — verplicht bij verkoopopdracht</div>
+      <div class="warn-box"><strong>VBO-regelgeving:</strong> De verkoop mag niet openbaar worden gemaakt zolang het dossier niet compleet is. Zorg dat alle stukken binnen zijn vóórdat je publiceert.</div>
+
+      <table class="data-table">
+        <tr><th>Document</th><th>Altijd verplicht</th></tr>
+        <tr><td>Vragenlijst verkoop</td><td>Volledig ingevuld + ondertekend door verkoper</td></tr>
+        <tr><td>Lijst van mee te verkopen zaken</td><td>Alle roerende zaken vermeld</td></tr>
+        <tr><td>Energielabel</td><td>Geldig en geregistreerd</td></tr>
+        <tr><td>VvE stukken (bij appartementen)</td><td>Splitsingsakte · Huishoudelijk reglement · Notulen laatste 2 vergaderingen · Begroting · Jaarstukken 2 jaar · MJOP · Contactgegevens administrateur</td></tr>
+        <tr><td>Eigendomsbewijs + eventuele akten</td><td>Erfpacht · erfdienstbaarheden · kwalitatieve verplichtingen</td></tr>
+        <tr><th>Document</th><th>Indien van toepassing</th></tr>
+        <tr><td>Bouw-/verbouwtekeningen</td><td>Inclusief vergunningen</td></tr>
+        <tr><td>Aanschrijvingen gemeente</td><td>Herstellingen, saneringsbevelen</td></tr>
+        <tr><td>Samenlevingscontract</td><td>Als er een verkoopclausule in staat</td></tr>
+        <tr><td>Verklaring van Erfrecht</td><td>Bij nalatenschap</td></tr>
+        <tr><td>Statuten + KVK uittreksel</td><td>Als BV/NV/VOF de verkoper is</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /page-fase1 -->
+
+<!-- ══════════════════════════════════════════
+     FINANCIEEL & ADMIN
+══════════════════════════════════════════ -->
+<div id="page-financieel" class="page-section">
+
+  <div class="section-header">
+    <div class="section-tag">Financieel & Administratief</div>
+    <div class="section-title">Jouw financiële fundament</div>
+    <div class="section-sub">Snelstart · BTW · Facturatie · Rollen · Groeimodel · Deadlines</div>
+  </div>
+
+  <!-- ROLLEN -->
+  <div id="b-rollen" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-rollen')">
+      <div><div class="cb-title">Rollen & Verantwoordelijkheden</div><div class="cb-sub">Scott · Johan · José · Hans · Ton</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <table class="data-table">
+        <tr><th>Persoon</th><th>Rol</th><th>Wat doet hij/zij voor jou</th><th>Wanneer contact</th></tr>
+        <tr><td><strong>Scott Witteman</strong><br><span style="font-size:11px;color:var(--light)">BG Accountants</span></td><td>Eindverantwoordelijke externe accountant</td><td>Verwerkt maandelijkse administratie · boekt facturen · matcht banktransacties · stuurt vraagposten</td><td>Maandelijks vraagposten ontvangen · kwartaal accountantsoverleg</td></tr>
+        <tr><td><strong>Johan Vast</strong><br><span style="font-size:11px;color:var(--light)">Vast Administraties</span></td><td>Interne boekhouder MVA</td><td>Kwartaalafsluiting · BTW-aangifte · centrale schakel tussen BG, makelaars en Pro Vastgoedgroep · eerste aanspreekpunt voor jouw vragen</td><td>Bij vragen · kwartaal aangifte · wekelijks overleg met Ton</td></tr>
+        <tr><td><strong>José Valencia</strong><br><span style="font-size:11px;color:var(--light)">Pro Vastgoedgroep</span></td><td>Franchise administratie</td><td>Stuurt afdracht nota's · maandelijkse vaste en variabele kostennota's · herinneringen openstaande facturen</td><td>Maandelijks kostennota's ontvangen en betalen</td></tr>
+        <tr><td><strong>Hans Koppes</strong></td><td>Directie + Bedrijfskundig adviseur</td><td>Bespreekt kwartaalcijfers · analyseert rendement · adviseert bijsturing · coaching traject</td><td>Kwartaal na cijfers beschikbaar · ook op initiatief makelaar zelf</td></tr>
+        <tr><td><strong>Ton Coffeng</strong></td><td>Directie</td><td>Coaching · formulekwaliteit bewaken · aansluiten bij gesprekken met Hans</td><td>Wekelijks dinsdag overleg</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SNELSTART -->
+  <div id="b-snelstart" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-snelstart')">
+      <div><div class="cb-title">Snelstart — Jouw Boekhoudprogramma</div><div class="cb-sub">Dag 1 inrichten · Bonnen uploaden · Bankkoppeling · Verkoopfacturen automatisch</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Account aanmaken met Johan</div><div class="step-desc">Plan een belafspraak met Johan Vast voor het inrichten van Snelstart op dag 1</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">E-mailkoppeling instellen</div><div class="step-desc">Je krijgt een uniek adres: [jouwbedrijfsnaam]@boekhouding.nl — stuur hiernaar alle bonnen en inkoopfacturen</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Bankkoppeling leggen</div><div class="step-desc">Koppel je zakelijke bankrekening aan Snelstart zodat transacties automatisch worden ingelezen (zie Bijlage 3 SOP)</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Verkoopfacturen komen automatisch</div><div class="step-desc">Courtagenota's uit Effytool worden automatisch ingelezen in Snelstart — jij hoeft dit niet handmatig te doen</div></div></div>
+      </div>
+      <div class="warn-box"><strong>Maandelijkse deadline:</strong> Uiterlijk de <strong>5e werkdag</strong> van de nieuwe maand alle bonnen en banktransacties aanleveren in Snelstart. BG verwerkt voor de 14e. Te laat aanleveren = vraagposten en vertraging in je rapportage.</div>
+    </div>
+  </div>
+
+  <!-- BTW -->
+  <div id="b-btw" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-btw')">
+      <div><div class="cb-title">BTW & Kwartaalafsluiting</div><div class="cb-sub">21% BTW · Kwartaal aangifte · Johan doet dit · Deadlines</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>Als zelfstandig makelaar factureer je 21% BTW</strong> over je courtage. Johan Vast doet de kwartaalaangifte voor jou — maar hij heeft jouw correcte administratie nodig.</div>
+      <table class="data-table">
+        <tr><th>Kwartaal</th><th>Periode</th><th>Aangifte deadline</th><th>Wat jij aanlevert</th></tr>
+        <tr><td>Q1</td><td>Jan–Mrt</td><td>3e volle week april</td><td>Alle bonnen t/m 5e werkdag april</td></tr>
+        <tr><td>Q2</td><td>Apr–Jun</td><td>3e volle week juli</td><td>Alle bonnen t/m 5e werkdag juli</td></tr>
+        <tr><td>Q3</td><td>Jul–Sep</td><td>3e volle week oktober</td><td>Alle bonnen t/m 5e werkdag oktober</td></tr>
+        <tr><td>Q4</td><td>Okt–Dec</td><td>3e volle week januari</td><td>Alle bonnen t/m 5e werkdag januari</td></tr>
+      </table>
+      <div class="warn-box"><strong>Kwartaalafsluiting door Johan:</strong> Na verwerking alle maanden → integrale controle · bank + grootboek afstemmen · openstaande posten beoordelen · BTW-positie controleren. Opvallende afwijkingen worden besproken met jou én Hans.</div>
+    </div>
+  </div>
+
+  <!-- MAAND ROUTINE -->
+  <div id="b-maand" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-maand')">
+      <div><div class="cb-title">Maandelijkse Routine</div><div class="cb-sub">Wat jij elke maand doet · Wat BG doet · Wat José stuurt</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Wanneer</th><th>Wie</th><th>Actie</th></tr>
+        <tr><td><strong>Uiterlijk 5e werkdag</strong></td><td>Jij (makelaar)</td><td>Alle bonnen + inkoopfacturen uploaden in Snelstart via <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9c7c8c8c4e9cbc6ccc2c1c6dccdc0c7ce87c7c5">[email&#160;protected]</a></td></tr>
+        <tr><td>Week 1 nieuwe maand</td><td>BG (Scott)</td><td>Herinneringsmail sturen voor aanleveren administratie</td></tr>
+        <tr><td>Uiterlijk 14e</td><td>BG (Scott)</td><td>Administratie verwerken · vraagposten sturen naar makelaar (Johan in cc)</td></tr>
+        <tr><td>Na verwerking</td><td>Jij (makelaar)</td><td>Reageren op vraagposten van BG — kijk in Snelstart onder grootboekrekening 2300</td></tr>
+        <tr><td>Maandelijks</td><td>José Valencia</td><td>Vaste en variabele kostennota's sturen → jij betaalt deze</td></tr>
+        <tr><td>Dinsdag</td><td>Johan Vast</td><td>Betalingen verrichten op basis van geautoriseerde afdracht nota's</td></tr>
+        <tr><td>Einde maand</td><td>Jij (makelaar)</td><td>Maandfactuur Effytool controleren en autoriseren</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- FACTURATIE -->
+  <div id="b-factuur" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-factuur')">
+      <div><div class="cb-title">Facturatie Procedure Effytool</div><div class="cb-sub">Opstartfactuur · Conceptfactuur · Courtagenota · Franchise afdracht</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="workflow">
+        <div class="wf-step">
+          <div class="wf-trigger">Na OTD tekenen</div>
+          <div class="wf-actions"><ul>
+            <li>Binnen 2 werkdagen: opstartfactuur aanmaken door backoffice</li>
+            <li>Of in concept klaarzetten als kosten bij notaris worden voldaan</li>
+            <li>Makelaar autoriseert alle facturen in Effytool</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">Na KO tekenen</div>
+          <div class="wf-actions"><ul>
+            <li>Na 3 dagen bedenktijd: KO uploaden in EyeMove + Effytool</li>
+            <li>Binnen 2 werkdagen: conceptfactuur aanmaken met uitstelfunctie 16 dagen voor transport</li>
+            <li>Extra diensten (Funda extra, social media, Google) op eindfactuur bijschrijven</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">16 dagen voor transport</div>
+          <div class="wf-actions"><ul>
+            <li>Eindfactuur (courtagenota) autoriseren door makelaar</li>
+            <li>Franchise afdracht nota in concept klaargezet door backoffice</li>
+            <li>Betaalinstructie invullen als controledocument</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">Na transport</div>
+          <div class="wf-actions"><ul>
+            <li>Notaris maakt courtage over op derdengeldrekening</li>
+            <li>Dinsdag: Johan verwerkt betalingen na geautoriseerde afdracht nota's</li>
+            <li>Jij ontvangt jouw deel na aftrek franchise afdracht</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEVELS -->
+  <div id="b-levels" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-levels')">
+      <div><div class="cb-title">Groeimodel Levels 1–5</div><div class="cb-sub">Courtagepercentages · Doorgroeicriteria · Kostentabel</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Level</th><th>Titel</th><th>Courtage %</th><th>Criteria</th><th>Max duur</th></tr>
+        <tr><td><strong>1</strong></td><td>Trainee</td><td>35%</td><td>Minimaal 5 transacties aantonen</td><td>7 maanden</td></tr>
+        <tr><td><strong>2</strong></td><td>Junior Makelaar</td><td>50%</td><td>Bewezen zelfstandig functioneren</td><td>—</td></tr>
+        <tr><td><strong>3</strong></td><td>Makelaar</td><td>60%</td><td>Consistente resultaten + AVV diploma</td><td>—</td></tr>
+        <tr><td><strong>4</strong></td><td>Senior Makelaar</td><td>70%</td><td>Trackrecord + netwerk opgebouwd</td><td>—</td></tr>
+        <tr><td><strong>5</strong></td><td>Register Makelaar</td><td>80%+</td><td>Participaties mogelijk</td><td>—</td></tr>
+      </table>
+      <div class="info-box"><strong>Hoe werkt het courtagepercentage?</strong> Als Level 1 ontvang je 35% van de courtage die de klant betaalt. De rest gaat naar MVA (franchise afdracht + kosten). Elke transactie telt mee voor doorgroei naar Level 2. Bespreek je voortgang elke 2 maanden met Hans.</div>
+
+      <!-- REKENBLOK LEVEL 1 -->
+      <div style="background:var(--navy);color:white;padding:20px 24px;margin-top:16px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">Rekenmodel Level 1 — Wat houd jij over per transactie?</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+          <!-- VOORBEELD BEREKENING -->
+          <div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Voorbeeld: koopsom €600.000 · courtage 1%</div>
+            <table style="width:100%;font-size:12px;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:6px 0;color:rgba(255,255,255,.7);">Bruto courtage (incl. 21% BTW)</td>
+                <td style="padding:6px 0;text-align:right;font-weight:700;">€ 6.000</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:6px 0;color:rgba(255,255,255,.7);">Courtage excl. BTW</td>
+                <td style="padding:6px 0;text-align:right;font-weight:700;">€ 4.959</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:6px 0;color:rgba(255,255,255,.7);">Jouw aandeel Level 1 (35%)</td>
+                <td style="padding:6px 0;text-align:right;font-weight:700;color:var(--orange);">€ 1.736</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:6px 0;color:rgba(255,255,255,.7);">Minus kantoorkosten p/mnd</td>
+                <td style="padding:6px 0;text-align:right;font-weight:700;">− € 225</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:6px 0;color:rgba(255,255,255,.7);">Minus eigen bedrijfskosten p/mnd</td>
+                <td style="padding:6px 0;text-align:right;font-weight:700;">− € 400</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;font-weight:700;">Netto per transactie (excl. belasting)</td>
+                <td style="padding:8px 0;text-align:right;font-weight:900;font-size:16px;color:var(--orange);">≈ € 1.111</td>
+              </tr>
+            </table>
+            <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:8px;">* Bij één transactie per maand. Kosten lopen door ongeacht transacties.</div>
+          </div>
+
+          <!-- VASTE KOSTEN + BREAK-EVEN -->
+          <div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Vaste kosten Level 1 per maand</div>
+            <table style="width:100%;font-size:12px;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:5px 0;color:rgba(255,255,255,.7);">Kantoorkosten MVA</td>
+                <td style="padding:5px 0;text-align:right;font-weight:700;">€ 225</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:5px 0;color:rgba(255,255,255,.7);">Eigen bedrijfskosten (indicatief)</td>
+                <td style="padding:5px 0;text-align:right;font-weight:700;">€ 400</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.15);">
+                <td style="padding:6px 0;font-weight:700;">Totaal vaste lasten p/mnd</td>
+                <td style="padding:6px 0;text-align:right;font-weight:900;color:var(--orange);">€ 625</td>
+              </tr>
+            </table>
+
+            <div style="margin-top:14px;font-size:11px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Break-even berekening</div>
+            <table style="width:100%;font-size:12px;border-collapse:collapse;">
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:5px 0;color:rgba(255,255,255,.7);">Gemiddelde aankoop Amsterdam</td>
+                <td style="padding:5px 0;text-align:right;font-weight:700;">€ 550.000</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:5px 0;color:rgba(255,255,255,.7);">Courtage excl. BTW (1%)</td>
+                <td style="padding:5px 0;text-align:right;font-weight:700;">€ 4.545</td>
+              </tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,.1);">
+                <td style="padding:5px 0;color:rgba(255,255,255,.7);">Jouw deel 35%</td>
+                <td style="padding:5px 0;text-align:right;font-weight:700;">€ 1.591</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0;font-weight:700;">Break-even bij <span style="color:var(--orange);">±5 transacties</span> in 7 mnd</td>
+                <td style="padding:6px 0;text-align:right;font-weight:700;color:var(--orange);">= Level 2</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:rgba(255,255,255,.5);">
+          Dit rekenmodel is indicatief. Resultaten verschillen per persoon en zijn afhankelijk van inzet, marktomstandigheden en individuele afspraken. Bespreek je persoonlijke businessplan op dag 4 met Hans.
+        </div>
+      </div>
+
+      <!-- AFVINKLIJST BEGRIP REKENMODEL -->
+      <div style="margin-top:16px;background:white;border:1px solid var(--border);padding:16px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:12px;">✓ Vink af als je het begrijpt</div>
+        <ul class="checklist" id="rekenmodel-checklist">
+          <li onclick="toggleCheck(this)" style="cursor:pointer;">Ik weet wat mijn courtagepercentage is als Level 1 (35%)</li>
+          <li onclick="toggleCheck(this)" style="cursor:pointer;">Ik weet wat mijn vaste kantoorkosten zijn per maand (€225)</li>
+          <li onclick="toggleCheck(this)" style="cursor:pointer;">Ik kan berekenen wat ik netto overhoudt bij een gemiddelde transactie</li>
+          <li onclick="toggleCheck(this)" style="cursor:pointer;">Ik weet hoeveel transacties ik nodig heb om break-even te draaien</li>
+          <li onclick="toggleCheck(this)" style="cursor:pointer;">Ik weet wanneer ik doorgroei naar Level 2 (min. 5 transacties, max. 7 maanden)</li>
+          <li onclick="toggleCheck(this)" style="cursor:pointer;">Ik heb mijn businessplan besproken met Hans op dag 4</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-financieel -->
+
+<!-- ══════════════════════════════════════════
+     FLOORTIME
+══════════════════════════════════════════ -->
+<div id="page-floortime" class="page-section">
+
+  <div class="section-header">
+    <div class="section-tag">Floortime · Kantoorleider van Dienst</div>
+    <div class="section-title">Kantoordienst — Jouw Verantwoordelijkheid</div>
+    <div class="section-sub">Verplicht voor fulltime makelaars · Blokken van 2 uur · Rooster in Effytool · Buffini scripts</div>
+    <div class="section-meta">
+      <span class="meta-badge">Boete €37,50/half uur bij no-show</span>
+      <span class="meta-badge">Rooster maandelijks rondgestuurd</span>
+      <span class="meta-badge">Ninja: Connection before conversion</span>
+    </div>
+  </div>
+
+  <!-- BELEID -->
+  <div id="b-ftbeleid" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ftbeleid')">
+      <div><div class="cb-title">Beleid & Procedure</div><div class="cb-sub">Wanneer verplicht · Hoe werkt het rooster · Check-in/out · Takenpakket</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Check-in bij aanvang dienst</div><div class="step-desc">Meld je bij de frontoffice flexplek · doe een korte kantoorronde · lees notities in gezamenlijke mailbox</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Werk vanuit aangewezen werkplek</div><div class="step-desc">Nabij de balie · hoorbaar aanwezig · je mag eigen werk doen zolang je beschikbaar bent</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Bij lead via raambord of Funda</div><div class="step-desc">"Werkt u al met een van onze makelaars?" → Ja: doorverwijzen → Nee: jij pakt het op en verwerkt in systemen</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Terugkerende taken tijdens dienst</div><div class="step-desc">Check mailbox amsterdam@ · kantoorronde · coach frontoffice · alle telefoonnotities correct doorgezet · mailbox leeg bij einde dienst (OHIO)</div></div></div>
+      </div>
+      <div class="warn-box"><strong>Niet verschijnen zonder vervanging = boete €37,50 per half uur</strong> te voldoen aan de collega die jouw dienst heeft overgenomen. Regel tijdig vervanging als je niet kunt.</div>
+      <div class="info-box"><strong>Deelnamecriteria:</strong> Je bent up-to-date met afspraken en facturen · geen actieve klachten bij geschillenraad · nieuwe collega's draaien mee onder begeleiding ervaren makelaar.</div>
+    </div>
+  </div>
+
+  <!-- OPENING -->
+  <div id="b-ftopening" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ftopening')">
+      <div><div class="cb-title">Opening & Begroeting</div><div class="cb-sub">Vast format · Telefonisch en balie · Doel: rust en positionering</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Ninja Selling uitgangspunt floortime</div>
+        <div class="ninja-quote">"Connection before conversion. Service before sales."</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Telefonisch — vaste opening</div>
+        <div class="script-line">"<strong>Goedemiddag, u spreekt met [Naam] van MakelaarsVan, waarmee kan ik u van dienst zijn?</strong>"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Balie / binnenloper</div>
+        <div class="script-line">"<strong>Goedemiddag, welkom bij MakelaarsVan. Waarmee kan ik u helpen?</strong>"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Woning niet meer beschikbaar</div>
+        <div class="script-line">"Ik kijk dat graag voor u na. Mocht deze woning niet meer beschikbaar zijn, <strong>zal ik dan alvast meekijken naar alternatieven die aansluiten bij uw woonwensen?</strong>"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADKWALIFICATIE -->
+  <div id="b-ftkwalificatie" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ftkwalificatie')">
+      <div><div class="cb-title">Leadkwalificatie — Natuurlijke Intake</div><div class="cb-sub">5 kernvragen · Max 3–5 minuten · Geen kruisverhoor</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="script-box">
+        <div class="script-label">Overgangszin</div>
+        <div class="script-line">"Om u goed te kunnen helpen, <strong>mag ik u een paar korte vragen stellen?</strong>"</div>
+      </div>
+      <ul class="checklist">
+        <li>Bent u al actief op zoek of nog aan het oriënteren?</li>
+        <li>Zoekt u voor uzelf of samen met iemand?</li>
+        <li>Heeft u al contact met een aankoopmakelaar?</li>
+        <li>Heeft u inzicht in uw financiële mogelijkheden (via hypotheekadviseur)?</li>
+        <li>In welke plaatsen of wijken zoekt u?</li>
+        <li>Wat vindt u belangrijk in een woning (type, kamers, tuin, ligging)?</li>
+      </ul>
+      <div class="warn-box"><strong>Geen kruisverhoor.</strong> Gesprek natuurlijk laten verlopen. Maximaal 3–5 minuten. Doel: motivatie, urgentie en haalbaarheid inschatten.</div>
+    </div>
+  </div>
+
+  <!-- VERVOLGSTAP -->
+  <div id="b-ftvervolgstap" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ftvervolgstap')">
+      <div><div class="cb-title">Vervolgstap aanbieden</div><div class="cb-sub">Altijd meerdere opties · Klant kiest zelf · Geen druk</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="script-box">
+        <div class="script-label">Optie 1 — Informatie per e-mail</div>
+        <div class="script-line">"Ik kan u per e-mail informatie sturen over deze woning én enkele vergelijkbare woningen. <strong>Wat is uw e-mailadres?</strong>"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Optie 2 — Bezichtiging of kennismaking</div>
+        <div class="script-line">"Wilt u een afspraak maken voor een <strong>bezichtiging</strong> of een kort <strong>kennismakingsgesprek</strong> met één van onze makelaars?"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Optie 3 — Oriëntatiegesprek (Ninja)</div>
+        <div class="script-line">"Wij bieden ook een <strong>vrijblijvend woonwensen-oriëntatiegesprek</strong>, waarin we samen uw mogelijkheden in kaart brengen. Zal ik u daarvoor inplannen?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRM -->
+  <div id="b-ftcrm" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ftcrm')">
+      <div><div class="cb-title">CRM Registratie — Verplicht na elk gesprek</div><div class="cb-sub">Realworks + Cloze · Minimale vastlegging · Onderdeel van professioneel klantcontact</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="warn-box"><strong>CRM-registratie is geen administratieve handeling achteraf</strong> — het is onderdeel van professioneel klantcontact. Doe het tijdens of direct na het gesprek.</div>
+      <ul class="checklist">
+        <li>Contactgegevens (naam, telefoon, e-mail)</li>
+        <li>Reden van contact</li>
+        <li>Zoekcriteria (budget, type, wijk, tijdlijn)</li>
+        <li>Afgesproken vervolgstap + datum</li>
+        <li>In Realworks: relatie aanmaken + status</li>
+        <li>In Cloze: opvolging instellen + herinnering</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EMAIL FOLLOW-UP -->
+  <div id="b-ftemail" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ftemail')">
+      <div><div class="cb-title">E-mail Follow-up Template</div><div class="cb-sub">Stuur altijd na telefonisch contact</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="script-box">
+        <div class="script-label">E-mail onderwerp</div>
+        <div class="script-line"><strong>Bedankt voor uw interesse — vervolgstappen</strong></div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">E-mail inhoud</div>
+        <div class="script-line">
+          Beste <strong>[Voornaam]</strong>,<br><br>
+          Bedankt voor uw telefoontje van vandaag over <strong>[adres / zoekvraag]</strong>.<br><br>
+          Zoals besproken heb ik de informatie voor u op een rij gezet:<br>
+          • Informatie over de woning: <strong>[link / bijlage]</strong><br>
+          • Mogelijke alternatieven: <strong>[2–3 links]</strong><br>
+          • Informatie over aankoopbegeleiding: <strong>[link]</strong><br>
+          • Vrijblijvend woonwensen-gesprek: <strong>[link afspraaktool]</strong><br><br>
+          Mocht u vragen hebben of iets willen inplannen, dan hoor ik dat graag.<br><br>
+          Met vriendelijke groet,<br>
+          <strong>[Naam]</strong> · MakelaarsVan <strong>[vestiging]</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-floortime -->
+
+<!-- ══════════════════════════════════════════
+     WORKFLOWS
+══════════════════════════════════════════ -->
+<div id="page-workflows" class="page-section">
+
+  <div class="section-header">
+    <div class="section-tag">Operationele Workflows</div>
+    <div class="section-title">Aankoop & Verkoop Workflows</div>
+    <div class="section-sub">Stap-voor-stap per fase · Effytool · Cloze · Realworks · Yisual</div>
+  </div>
+
+  <!-- AANKOOP WORKFLOW -->
+  <div id="b-wfaankoop" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-wfaankoop')">
+      <div><div class="cb-title">Aankoop Workflow — 10 Stappen</div><div class="cb-sub">Van gesprek ingepland tot leveringsakte getekend</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <div class="workflow">
+        <div class="wf-step">
+          <div class="wf-trigger">WF 1<br>Gesprek ingepland</div>
+          <div class="wf-actions"><ul>
+            <li>Relatie + project aanmaken in Effytool</li>
+            <li>Relatie + dealkaart aanmaken in Cloze</li>
+            <li>Pre-sales pakket versturen naar klant</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 2<br>OTD getekend</div>
+          <div class="wf-actions"><ul>
+            <li>Aankoopopdracht aanmaken in Realworks</li>
+            <li>Status op "lopend" zetten</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 3<br>Opdracht aangemaakt</div>
+          <div class="wf-actions"><ul>
+            <li>Zoekersprofiel aanmaken in Realworks</li>
+            <li>Move-account opdrachtgever(s) activeren</li>
+            <li>E-mail uitleg WWFT + ID-check naar opdrachtgever</li>
+            <li>Handgeschreven kaartje sturen ter bedanking</li>
+            <li>Mailbevestiging zoekersprofiel</li>
+            <li>Mail notarissenlijst sturen</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 5<br>Bod geaccepteerd</div>
+          <div class="wf-actions"><ul>
+            <li>Bevestigingsmail naar verkopend makelaar</li>
+            <li>Bevestigingsmail naar klant met condities bod</li>
+            <li>Notaris kiezen of bevestigen</li>
+            <li>Mail notaris met condities + documentatie</li>
+            <li>Data verwerken in systemen</li>
+            <li>Afspraak plannen voor KO ondertekening</li>
+            <li>WWFT + ID-check verkoper regelen</li>
+            <li>Taxatie + bouwkundige keuring plannen indien nodig</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 6<br>OV verlopen</div>
+          <div class="wf-actions"><ul>
+            <li>Financieringsaanvraag checken bij koper</li>
+            <li>Indien nodig: uitstel aanvragen bij verkopend makelaar</li>
+            <li>Akkoord doorgeven aan verkopend makelaar</li>
+            <li>Toestemming aankoopmakelaar op Funda aanvragen</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 8<br>KO getekend</div>
+          <div class="wf-actions"><ul>
+            <li>Datum OV invullen + in agenda</li>
+            <li>Datum waarborgsom invullen + in agenda</li>
+            <li>Status aanpassen in Effytool</li>
+            <li>Relatie + deal aanpassen in Cloze</li>
+            <li>Handgeschreven felicitatie sturen</li>
+            <li>Conceptfactuur aanmaken in Effytool</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 9<br>Transport nadert</div>
+          <div class="wf-actions"><ul>
+            <li>Mail G/W/W/L checklist of verhuischecklist sturen</li>
+            <li>7 dagen voor levering: notaris mailen inzake levering</li>
+            <li>Leveringsakte + nota van afrekening doornemen</li>
+            <li>1 dag voor levering: review vragen (Funda + WIDBM)</li>
+            <li>Aangekocht flyer versturen via Yisual</li>
+            <li>Champagne, bloemen of cadeau regelen</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 10<br>Leveringsakte getekend</div>
+          <div class="wf-actions"><ul>
+            <li>Opdrachtgever toevoegen aan database A/B/C in Cloze</li>
+            <li>Na 2 dagen bellen — zijn er onverwachte zaken?</li>
+            <li>Aankoopopdracht op status "gereed" in Realworks</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VERKOOP WORKFLOW -->
+  <div id="b-wfverkoop" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-wfverkoop')">
+      <div><div class="cb-title">Verkoop Workflow — 6 Stappen</div><div class="cb-sub">Van OTD getekend tot woning gearchiveerd</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="workflow">
+        <div class="wf-step">
+          <div class="wf-trigger">WF 3<br>OTD getekend</div>
+          <div class="wf-actions"><ul>
+            <li>Mail opdrachtgever: OTD getekend + vervolgstappen</li>
+            <li>Move-account activeren voor opdrachtgever</li>
+            <li>OTD opslaan in Dossier + Move/Realworks</li>
+            <li>Cloze: van Hot naar Closed · data correct zetten</li>
+            <li>Handgeschreven bedankkaartje sturen</li>
+            <li>Fotograaf inplannen (e-mailtemplate vk 02.02.01)</li>
+            <li>Opstartfactuur aanmaken in Effytool</li>
+            <li>Verkoopbord + sleutel regelen</li>
+            <li>Sneak Preview: Dominique opdracht geven via Yisual</li>
+            <li>Woning gereedmaken in Realworks + Homeshow</li>
+            <li>Stukken checken: vragenlijst · lijst van zaken · kadaster · eigendomsbewijs · energielabel · splitsingsakte · VvE stukken</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 5<br>Woning online</div>
+          <div class="wf-actions"><ul>
+            <li>Opdrachtgever informeren dat woning is aangemeld</li>
+            <li>Funda tools bestellen in Fundadesk 2.0 + opdrachtgever koppelen</li>
+            <li>Final check: sleutel · bord · bezichtigingsblokken · klant geïnformeerd · collega's geïnformeerd · drukwerk · brochures · visitekaartjes Homeshow</li>
+            <li>Cloze: woning in juiste status + next step zetten</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 6<br>Overeenstemming</div>
+          <div class="wf-actions"><ul>
+            <li>Koper koppelen in Realworks bij het object</li>
+            <li>Move-account koper/aankoopmakelaar activeren</li>
+            <li>Bevestiging overeenstemming naar koper + personalia opvragen</li>
+            <li>Bevestiging overeenstemming naar opdrachtgever (NL of EN)</li>
+            <li>Instructie + gegevens naar notaris</li>
+            <li>Afspraak KO ondertekening plannen</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 8<br>KO getekend</div>
+          <div class="wf-actions"><ul>
+            <li>KO opslaan + uploaden in Move</li>
+            <li>Datum ondertekening + OV + waarborgsom + transport invullen in Realworks</li>
+            <li>Status: verkocht onder voorbehoud</li>
+            <li>Courtagenota aanmaken in Effytool</li>
+            <li>Cloze: relatie + deal bijwerken</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 9A<br>Transport volgende week</div>
+          <div class="wf-actions"><ul>
+            <li>Leveringsakte/nota van afrekening vragen beantwoorden</li>
+            <li>Review vragen (1 dag voor levering)</li>
+            <li>Inspectierapport in Realworks</li>
+            <li>Champagne of bloemen regelen</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger">WF 9B<br>Woning overgedragen</div>
+          <div class="wf-actions"><ul>
+            <li>Leveringsakte verwerken</li>
+            <li>Verkocht flyer versturen via Yisual</li>
+            <li>WWFT + ID-check controleren</li>
+            <li>Courtage ontvangst controleren</li>
+            <li>Object op inactief in Realworks</li>
+            <li>Woning archiveren</li>
+            <li>Cloze + Effytool: project sluiten</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WONINGPROMOTIE BLOK -->
+  <div id="b-promotie" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-promotie')">
+      <div><div class="cb-title">Woningpromotie — 7 Fasen (automatisch)</div><div class="cb-sub">Wat er gebeurt na OTD tekenen · Jij triggert · Dominique + Kyra + Monique voeren uit</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>Jouw rol:</strong> Jij triggert de machine door OTD te tekenen en Monique te informeren. De rest loopt automatisch via het marketingteam. Je hoeft het promotieplan niet zelf te maken — wel te begrijpen wat er wanneer gebeurt zodat je je verkoper goed kunt informeren.</div>
+      <div class="workflow">
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:#6A1B9A;">Fase 1<br>Binnenkort te koop</div>
+          <div class="wf-actions"><ul>
+            <li>Teaser post op Instagram/Facebook — geen adres nog</li>
+            <li>Globale kenmerken of uitzicht tonen</li>
+            <li>Zoekersgroepen informeren via WhatsApp (Volgers Eerst)</li>
+            <li><strong>Jij doet:</strong> Monique informeren dat woning eraan komt + fotograaf inplannen</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:#1565C0;">Fase 2<br>Nieuw in de verkoop</div>
+          <div class="wf-actions"><ul>
+            <li>Woningvideo teaser met makelaar op social media</li>
+            <li>Eigen woningwebsite live via Homeshow (uniek URL)</li>
+            <li>Woning op kantoorwebsite met bezichtigingsplanner</li>
+            <li>Woningmatch verstuurd via CRM + zoekersdatabase</li>
+            <li><strong>Jij doet:</strong> Sneak Preview opdracht via Yisual → Dominique regelt social posts</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:var(--orange);">Fase 3<br>Nu op Funda</div>
+          <div class="wf-actions"><ul>
+            <li>Publicatie op Funda (Premium) + Huispedia + Pararius</li>
+            <li>Quick Share post: foto · vraagprijs · link afspraaktool</li>
+            <li>360°-beelden + video + plattegronden in Funda Desk</li>
+            <li>Collega-aankoopmakelaars geïnformeerd via netwerk</li>
+            <li><strong>Jij doet:</strong> 3×24u wachten na woningwebsite vóór Funda publicatie</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:var(--green);">Fase 4<br>Open Huis</div>
+          <div class="wf-actions"><ul>
+            <li>Social post reel met datum en tijd</li>
+            <li>Facebook Event + Meta boost advertentie</li>
+            <li>Wijkflyer via Yisual postcode-gericht</li>
+            <li><strong>Jij doet:</strong> Datum open huis doorgeven aan Monique minimaal 1 week van tevoren</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:var(--amber);">Fase 5<br>Heractivatie</div>
+          <div class="wf-actions"><ul>
+            <li>Herpublicatie met nieuwe invalshoek of bijschrift</li>
+            <li>Prijsaanpassing feitelijk benoemen</li>
+            <li>Betaalde campagne via Meta + DPG</li>
+            <li><strong>Jij doet:</strong> Overleggen met Monique en verkoper wanneer heractivatie nodig is</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:var(--navy);">Fase 6<br>Verkocht</div>
+          <div class="wf-actions"><ul>
+            <li>Quick Share post "Succesvol verkocht"</li>
+            <li>Verkoopsnelheid of bijzonder resultaat benoemen</li>
+            <li>Verkocht flyer via Yisual in de buurt</li>
+            <li><strong>Jij doet:</strong> Resultaat doorgeven aan Dominique na transport</li>
+          </ul></div>
+        </div>
+        <div class="wf-step">
+          <div class="wf-trigger" style="background:var(--green);">Fase 7<br>Reviews</div>
+          <div class="wf-actions"><ul>
+            <li>Review-post via Quick Share (Google · WIDBM · Funda)</li>
+            <li>Klant gevraagd voor korte fanvideo of testimonial</li>
+            <li>Reviews verwerkt op kantoorwebsite</li>
+            <li><strong>Jij doet:</strong> Review vragen 1 dag vóór levering · doorsturen naar Dominique</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="success-box"><strong>Social media content — wat jij wekelijks aanlevert:</strong> 3–5 foto's (opname · bezichtiging · sleuteloverdracht · bord · buurt) + 1 korte video (10–20 sec verticaal) + 1 zin toelichting. Sturen via WhatsApp-groep Content MakelaarsVan of Drive. Totale tijd: ±10 minuten per week.</div>
+    </div>
+  </div>
+
+</div><!-- /page-workflows -->
+
+<!-- ══════════════════════════════════════════
+     MODULES HANS
+══════════════════════════════════════════ -->
+<div id="page-modules" class="page-section">
+
+  <div class="section-header">
+    <div class="section-tag">Fase 2 · Maand 2–10 · Hans Koppes</div>
+    <div class="section-title">Verdiepingsmodules</div>
+    <div class="section-sub">9 modules · 6 weken per module · Scripts · KPI's · Cloze · Wekelijkse opbouw</div>
+  </div>
+
+  <div id="b-m2" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m2')">
+      <div><div class="cb-title">Module 2 — CRM Discipline & Werkritme</div><div class="cb-sub">Maand 2 · 6 weken · Database opschonen · Contactplan · Dagelijkse routine</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <div class="kpi-grid">
+        <div class="kpi-item"><div class="kpi-num">36</div><div class="kpi-label">Contactmomenten/jaar</div></div>
+        <div class="kpi-item"><div class="kpi-num">3</div><div class="kpi-label">Categorieën A/B/C</div></div>
+        <div class="kpi-item"><div class="kpi-num">100%</div><div class="kpi-label">Cloze bijhouden</div></div>
+        <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">Stappen werkwijze</div></div>
+      </div>
+      <div class="info-box"><strong>Kernprincipe:</strong> Cloze is niet een systeem om bij te houden wat je al weet — het is het systeem dat bepaalt wat je morgen doet. Zonder CRM-discipline verlies je deals die je niet eens ziet verdwijnen.</div>
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Database opschonen en segmenteren (week 1)</div><div class="step-desc">Doorloop alle contacten. Verwijder dubbelingen. Wijs elke persoon toe aan A (hot · wekelijks bellen), B (warm · maandelijks), C (database · auto-flow 36×/jaar). FORD-notities toevoegen aan iedereen die je kent.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Contactplan aanmaken (week 1–2)</div><div class="step-desc">Per categorie een contactritme instellen. Plan de eerste contactmomenten in de agenda — niet "als ik tijd heb".</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Dagelijkse routine instellen (week 2)</div><div class="step-desc">Elke ochtend: open Cloze → check "vandaag te doen" → voer uit. Elke avond: notities toevoegen. Nooit achteraf bijhouden.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Wekelijks werkritme (vanaf week 3)</div><div class="step-desc">Vrijdagochtend: Cloze bijwerken. Alle gesprekken loggen. Next steps instellen. Pipeline checken: welke kansen lig je te missen?</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">Maandelijkse pijplijnreview (elke 1e maandag)</div><div class="step-desc">Bekijk volledige pipeline. Welke deals zijn vastgelopen? Conversieratio lead → afspraak → opdracht? Bespreek met mentor.</div></div></div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — warm contact bellen (B-relatie)</div>
+        <div class="script-line">"Hoi [naam], met [naam] van MakelaarsVan. Ik bel je even want ik was in de buurt van [buurt] en dacht: ik bel [naam] even. Hoe gaat het?" [FORD] "Goed om te horen. Mochten er ooit vragen zijn over de woningmarkt of als je iemand kent die wil kopen of verkopen — je weet me te vinden."</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-m3" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m3')">
+      <div><div class="cb-title">Module 3 — Leadopvolging & Conversie</div><div class="cb-sub">Maand 3 · 6 weken · 5-min regel · 5-pogingen · A/B/C leadtypen · Scripts</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="kpi-grid">
+        <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">Min responstijd</div></div>
+        <div class="kpi-item"><div class="kpi-num">5</div><div class="kpi-label">Pogingen max</div></div>
+        <div class="kpi-item"><div class="kpi-num">400%</div><div class="kpi-label">Hogere conversie bij 5-min callback</div></div>
+        <div class="kpi-item"><div class="kpi-num">14</div><div class="kpi-label">Dagen intensief (warme lead)</div></div>
+      </div>
+      <div class="info-box"><strong>Kernprincipe:</strong> 80% van de deals gaat naar de makelaar die als eerste terugbelt — niet de beste makelaar, maar de snelste. Binnen 5 minuten terugbellen verhoogt de conversie met 400%.</div>
+      <table class="data-table">
+        <tr><th>Leadtype</th><th>Kenmerk</th><th>Opvolgritme</th></tr>
+        <tr><td><strong style="color:var(--red);">A — Warm</strong></td><td>Direct koopsignaal, korte tijdlijn (&lt;90 dagen)</td><td>Bellen binnen 5 min · follow-up elke 3–5 dagen · 14-daags intensief</td></tr>
+        <tr><td><strong style="color:var(--amber);">B — Lauw</strong></td><td>Oriënterend, tijdlijn 3–12 maanden</td><td>Maandelijks persoonlijk + auto-flow</td></tr>
+        <tr><td><strong style="color:var(--blue);">C — Koud</strong></td><td>Ver van beslissing, geen urgentie</td><td>Kwartaal contact + nieuwsbrief</td></tr>
+      </table>
+      <div class="script-box">
+        <div class="script-label">Script — eerste terugbelpoging binnen 5 minuten</div>
+        <div class="script-line">"Goedemiddag, u spreekt met [naam] van MakelaarsVan Amsterdam. Ik bel naar aanleiding van uw aanvraag op [bron]. Is dit een goed moment?"<br>[Ja:] "Fijn! Ik wil u graag een paar korte vragen stellen om u zo goed mogelijk te helpen. Waarvoor belde u?"<br>[Nee:] "Geen probleem. Wanneer kan ik u het beste terugbellen?"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — voicemail</div>
+        <div class="script-line">"Goedemiddag [naam], met [naam] van MakelaarsVan. Ik bel naar aanleiding van uw aanvraag. Ik probeer u later vandaag nog een keer te bereiken. U kunt mij ook terugbellen op [nummer]. Tot straks!"</div>
+      </div>
+      <div class="info-box"><strong>5-pogingen regel:</strong> Dag 1 (2×) · Dag 3 · Dag 7 · Dag 14. Na 5 pogingen: lead naar C-lijst + auto-flow activeren. Nooit meer dan 5 pogingen — dat wordt opdringerig.</div>
+    </div>
+  </div>
+
+  <div id="b-m4" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m4')">
+      <div><div class="cb-title">Module 4 — Verkoopgesprek & Opdracht Binnenhalen</div><div class="cb-sub">Maand 4 · 6 weken · 5 fasen · Voorbereiding = 50% · Opdracht verdienen · Zie apart document</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="success-box"><strong>Volledig uitgewerkt in:</strong> MVA_Module4_Verkoopgesprek.html — inclusief alle scripts, bezwarenmethode (4-stap), KPIs, rollenspelen en checklists.</div>
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">Fase 1</div><div class="step-content"><div class="step-title">Voorbereiding — 30 min voor elk gesprek</div><div class="step-desc">Woning analyseren · marktanalyse (3–5 vergelijkingen) · waardebepaling opstellen · verkoopplan voorbereiden · onderscheidend verhaal oefenen</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">Fase 2</div><div class="step-content"><div class="step-title">Verbindingsfase (5–10 min)</div><div class="step-desc">FORD-vragen. Oprecht compliment. Laat de klant praten. Begin NOOIT direct met de presentatie.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">Fase 3</div><div class="step-content"><div class="step-title">Ontdekkingsfase (15–20 min)</div><div class="step-desc">Minimaal 5 open vragen. 60% luisteren, 40% praten. Vat samen vóórdat je presenteert: "Als ik u goed begrijp..."</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">Fase 4</div><div class="step-content"><div class="step-title">Presentatiefase (15–20 min)</div><div class="step-desc">Afgestemd op wat je hebt gehoord. Waardebepaling mondeling toelichten. Onderscheidend verhaal: max 2–3 punten concreet.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">Fase 5</div><div class="step-content"><div class="step-title">Afsluiting — vraag altijd expliciet om de opdracht</div><div class="step-desc">"Heeft u het gevoel dat wij de goede match zijn?" Stilte is geen antwoord. Bel altijd binnen 48 uur op na het gesprek.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-m5" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m5')">
+      <div><div class="cb-title">Module 5 — Woningpresentatie & Marketing</div><div class="cb-sub">Maand 5 · 6 weken · 8 seconden · AIDA · Fotografie · Funda · Zie apart document</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="success-box"><strong>Volledig uitgewerkt in:</strong> MVA_Module5_Woningpresentatie.html — inclusief AIDA-structuur, fotografie briefing, shot list, scripts, veelgemaakte fouten en Funda live check.</div>
+      <div class="info-box"><strong>5 kernprincipes:</strong> (1) Eerste 8 seconden bepalen alles — hoofdfoto is allesbepalend · (2) Emotie vóór functie — mensen kopen gevoel, niet m² · (3) De juiste doelgroep visualiseren · (4) Consistentie across channels · (5) Verkopen begint vóór de bezichtiging</div>
+      <table class="data-table">
+        <tr><th>Pakket</th><th>Prijs incl. BTW</th><th>Inhoud</th></tr>
+        <tr><td><strong>Basis</strong></td><td>€895</td><td>Funda · foto's 360° · video · social media · NEN 2580 · brochure · buurtmailing</td></tr>
+        <tr><td><strong>Compleet</strong> ⭐</td><td>€1.095</td><td>Basis + social media advertentiecampagne + DPG mediabanners</td></tr>
+        <tr><td><strong>Premium</strong></td><td>€1.295</td><td>Compleet + drone video of 3D-tour + Funda Premium pakket</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="b-m6" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m6')">
+      <div><div class="cb-title">Module 6 — Onderhandelen & Prijsstrategie</div><div class="cb-sub">Maand 6 · 6 weken · BATNA · Ankereffect · Concessies · Biedingsoorlog · Scripts</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Kernprincipe onderhandelen</div>
+        <div class="ninja-quote">"De onderhandeling begint vóór het eerste bod. Wie het beste voorbereid is, wint — niet wie het hardst schreeuwt."</div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Voorbereiding — BATNA bepalen</div><div class="step-desc">Min. 3 vergelijkingspanden · marktwaarde vaststellen · BATNA van beide partijen inschatten · bandbreedte bepalen · concessies op niet-kernpunten (datum, roerende zaken) bedenken</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Opening — ankereffect benutten</div><div class="step-desc">Reageer nooit direct op een bod — neem altijd 15 min bedenktijd. Wie als eerste een getal noemt, verankert de discussie. Reageer altijd schriftelijk op een formeel bod.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Uitwisseling — formule</div><div class="step-desc">"Als jullie X doen, dan kunnen wij Y overwegen." Geef nooit zomaar iets weg. Verklein concessies progressief: eerste stap groot, daarna steeds kleiner.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Druk & deadlines</div><div class="step-desc">"We hebben nog een andere partij" — check altijd of dit klopt. Laat je niet opjagen. Een echte deadline communiceert de andere partij altijd concreet.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">Afsluiting — bevestig altijd schriftelijk</div><div class="step-desc">Overeenstemming dezelfde dag schriftelijk bevestigen. Alle afspraken oplijsten: prijs, datum, roerende zaken, OV. Naar beide partijen sturen.</div></div></div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — reactie op te laag bod (verkoopmakelaar)</div>
+        <div class="script-line">"Bedankt voor het bod. Ik ga dit met mijn klant bespreken en kom zo snel mogelijk terug." [Neem bedenktijd] "De eigenaar waardeert de interesse, maar het bod sluit niet aan bij zijn verwachtingen. Hij is bereid in gesprek te gaan, maar dan moeten we dichter bij [X] zitten. Is er ruimte om een geactualiseerd bod uit te brengen?"</div>
+      </div>
+      <div class="info-box"><strong>Drie betaalwijzen courtage:</strong> Percentage van koopsom · Vast bedrag · Bonusmodel (lagere basis + bonus boven richtprijs). Altijd transparant bespreken aan begin van opdracht. Bevestig elk bod schriftelijk per e-mail.</div>
+    </div>
+  </div>
+
+  <div id="b-m7" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m7')">
+      <div><div class="cb-title">Module 7 — Bezichtigingen & Aankoopbegeleiding</div><div class="cb-sub">Maand 7 · 6 weken · Woonwensengesprek · Vragen per ruimte · Nabespreking · Biedstrategie</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Ninja Selling — kernprincipe bezichtiging</div>
+        <div class="ninja-quote">"De koper koopt gevoel, niet vierkante meters. Jij verkoopt geen huis — jij helpt iemand een thuis vinden. Dat begint met luisteren, niet met vertellen."</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — startvragen woonwensengesprek</div>
+        <div class="script-line">"Voordat we woningen gaan bekijken, wil ik eerst goed begrijpen wat jullie écht zoeken."<br>"Wat is de aanleiding dat jullie nú willen kopen?"<br>"Als jullie over een jaar in jullie nieuwe woning staan — wat is dan het allerbelangrijkste dat jullie hebben gevonden?"<br>"Wat missen jullie nú in jullie huidige situatie?"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — vragen per ruimte</div>
+        <div class="script-line">Bij binnenkomst: "Wat is jullie eerste indruk?"<br>Woonkamer: "Hoe zien jullie dit in gebruik? Past dit bij hoe jullie leven?"<br>Keuken: "Koken jullie veel? Wat vinden jullie hiervan?"<br>Tuin: "Wat doen jullie graag buiten?"<br>Afsluiting: "Als je dit huis een cijfer geeft van 1–10 — wat geef je het? En wat zou het een 10 maken?"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — nabespreking direct na bezichtiging</div>
+        <div class="script-line">"Wat was jullie eerste gevoel toen we naar buiten liepen?" [Luister volledig]<br>"Als dit huis morgen weg zou zijn — hoe zou dat voelen?"<br>"Vergeleken met [eerder bezochte woning] — wat heeft de voorkeur en waarom?"</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — wekelijkse kopers-update (WhatsApp)</div>
+        <div class="script-line">"Hoi [naam], korte update: we hebben [X] woningen bekeken / er zijn [Y] nieuwe woningen die passen bij jullie profiel. Zijn er nog vragen of dingen die jullie bezig houden? Dan bel ik jullie even."</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-m8" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m8')">
+      <div><div class="cb-title">Module 8 — Aankoopmakelaardij & Advies</div><div class="cb-sub">Maand 8 · 6 weken · 5 kernprincipes · Koper ontzorgen · Objectiviteit bewaken</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>#</th><th>Principe</th><th>Wat dit betekent</th></tr>
+        <tr><td>1</td><td><strong>Koper begrijpen vóór je start</strong></td><td>Geen woning laten zien zonder woonwensengesprek. Kopers kopen hun Waarom, niet hun Wat.</td></tr>
+        <tr><td>2</td><td><strong>Snelheid is een competentie</strong></td><td>In Amsterdam gaat een woning gemiddeld in 1–3 dagen onder bod. Zelfde dag schakelen: bezichtiging, analyse, bod.</td></tr>
+        <tr><td>3</td><td><strong>Bezichtiging als diagnostisch instrument</strong></td><td>Jij gaat mee om te luisteren, niet om te kijken. Observeer reacties. Help de koper helder te worden.</td></tr>
+        <tr><td>4</td><td><strong>Bod als strategisch instrument</strong></td><td>Prijs + voorwaarden + datum + sfeer. Soms wint een bod met lagere prijs maar betere voorwaarden.</td></tr>
+        <tr><td>5</td><td><strong>Objectiviteit bewaken</strong></td><td>Als de koper verliefd wordt op een woning met ernstige gebreken — jij bent de rem. Jij beschermt hun belangen.</td></tr>
+      </table>
+      <div class="script-box">
+        <div class="script-label">Script — waardepropositie aan twijfelende koper</div>
+        <div class="script-line">"Ten eerste bespaar ik je tijd — gemiddeld 6 maanden zoeken wordt 6–10 weken. Ten tweede bespaar ik je geld — ik ken de marktwaarde van elke woning. Ten derde bescherm ik je — ik signaleer gebreken en juridische risico's die je mist omdat je verliefd bent op de woning. De vraag is niet of je een makelaar kunt betalen — de vraag is of je het je kunt permitteren om er zonder te gaan."</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-m9" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m9')">
+      <div><div class="cb-title">Module 9 — Financiering & Hypotheekadvies Basics</div><div class="cb-sub">Maand 9 · 6 weken · LTI/LTV · NHG · Financieringsvoorbehoud · 4 scenario's</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="warn-box"><strong>Wettelijke grens:</strong> Jij geeft géén hypotheekadvies en noemt geen specifieke bedragen of producten. Je stelt informatieve vragen om haalbaarheid te beoordelen. Verwijs altijd door naar Edwin Bitter (Huis & Hypotheek).</div>
+      <div style="font-size:12px;font-weight:700;margin:12px 0 8px;">Financiële intake vragen — bij elk gesprek (informatief)</div>
+      <ul class="checklist" style="cursor:default;">
+        <li style="cursor:default;">Heeft u al gesproken met een hypotheekadviseur? Heeft u een indicatie?</li>
+        <li style="cursor:default;">Wat is globaal uw maximale koopprijs?</li>
+        <li style="cursor:default;">Heeft u eigen geld beschikbaar? Globaal hoeveel?</li>
+        <li style="cursor:default;">Is er een eigen woning die eerst verkocht moet worden?</li>
+        <li style="cursor:default;">Zijn er bijzondere omstandigheden? (ZZP · recent van baan · alimentatie · BKR)</li>
+      </ul>
+      <table class="data-table">
+        <tr><th>Begrip</th><th>Wat het betekent</th><th>Jouw actie</th></tr>
+        <tr><td><strong>LTI</strong></td><td>Loan to Income — max hypotheek o.b.v. inkomen</td><td>Doorverwijzen naar Edwin Bitter</td></tr>
+        <tr><td><strong>LTV</strong></td><td>Loan to Value — max 100% van woningwaarde</td><td>Taxatierapport regelen</td></tr>
+        <tr><td><strong>NHG</strong></td><td>Nationale Hypotheek Garantie — voordeel lagere rente</td><td>Noemen als voordeel bij de klant</td></tr>
+        <tr><td><strong>OV financiering</strong></td><td>Ontbindende voorwaarde financiering in bod</td><td>Altijd opnemen tenzij klant bewust afziet</td></tr>
+        <tr><td><strong>ZZP-koper</strong></td><td>3 jaar jaarcijfers nodig · gemiddeld over 3 jaar</td><td>Direct doorverwijzen — speciale aanpak nodig</td></tr>
+      </table>
+      <div class="script-box">
+        <div class="script-label">Script — koper doorverwijzen naar hypotheekadviseur</div>
+        <div class="script-line">"Voordat we verder gaan met bezichtigingen, wil ik je vragen om eerst een gesprek te hebben met een hypotheekadviseur. Bij een populaire woning wil je dezelfde dag kunnen bieden — als je dan nog moet wachten op een indicatie, loop je achter de feiten aan. Ik werk samen met Edwin Bitter van Huis & Hypotheek — hij kan jullie binnen 48 uur een duidelijk beeld geven. Zal ik je zijn gegevens sturen?"</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-m10" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m10')">
+      <div><div class="cb-title">Module 10 — Klantretentie & After-Sales</div><div class="cb-sub">Maand 10+ · Doorlopend · 90-dagen schema · Reviews · Waarde-check · Housewarming cadeau</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Brian Buffini — 36-contactmomenten</div>
+        <div class="ninja-quote">"Klanttevredenheid is wanneer ze tevreden zijn. Klantloyaliteit is wanneer ze je aanbevelen. Het verschil zit in wat je doet nádat de deal gesloten is."</div>
+      </div>
+      <table class="data-table">
+        <tr><th>Tijdstip</th><th>Actie</th><th>Doel</th></tr>
+        <tr><td><strong>Dag van transport</strong></td><td>WhatsApp/bel + housewarming cadeau (€25–75, gepersonaliseerd op FORD)</td><td>Eerste indruk na overdracht</td></tr>
+        <tr><td><strong>Dag 3–5</strong></td><td>Check-in belletje: "Hoe was de eerste nacht?"</td><td>Zorgzaamheid tonen, problemen opvangen</td></tr>
+        <tr><td><strong>Dag 14</strong></td><td>Handgeschreven bedankkaart — persoonlijk, niet generiek</td><td>Blijvende indruk</td></tr>
+        <tr><td><strong>Dag 30</strong></td><td>Persoonlijk review verzoek (géén automatische mail)</td><td>Google / Funda / WIDBM review</td></tr>
+        <tr><td><strong>Dag 60</strong></td><td>Marktupdate met persoonlijke noot</td><td>Top-of-mind blijven</td></tr>
+        <tr><td><strong>Dag 90</strong></td><td>Telefoongesprek: "Hoe gaat het wonen? Ken je iemand die..."</td><td>Referral-gesprek openen</td></tr>
+      </table>
+      <div class="script-box">
+        <div class="script-label">Script — eerste check-in dag 3–5</div>
+        <div class="script-line">"Hoi [naam], met [naam] van MakelaarsVan. Hoe gaat het? Hoe was de eerste nacht in het nieuwe huis?" [Luister] "Heerlijk! Mochten er nog vragen zijn — over de woning, de buurt, of als je een aannemer nodig hebt — ik sta altijd klaar." (2–3 min. Doel: warmte, géén verkoop.)</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — review verzoek dag 30</div>
+        <div class="script-line">"Hoi [naam], hoe gaat het? Genieten jullie van de woning?" [Luister] "Fijn! Ik wilde je iets vragen — zou je bereid zijn om een korte review te schrijven op Google of Funda? Het hoeft niet lang — twee zinnen is al geweldig. Ik stuur je meteen een directe link, dan is het in 2 minuten gedaan."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 11 — REFERRALS -->
+  <div id="b-m11" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m11')">
+      <div><div class="cb-title">Module 11 — Referrals & Relatieonderhoud</div><div class="cb-sub">Doorlopend · Buffini methode · 5 stappen · Geven gaat voor vragen</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Ninja Selling — kernprincipe</div>
+        <div class="ninja-quote">"82% van alle vastgoedtransacties komt via doorverwijzingen. Maar die komen niet vanzelf. Je moet een systeem bouwen — en geven gaat altijd voor vragen."</div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Netwerk segmenteren op referral-potentie</div><div class="step-desc">Per contact: hoe groot is de kans dat deze persoon mij aanbeveelt? A = grote kans · B = middelmatig · C = onbekend. Wie heeft je al eens doorverwezen? → Direct prioriteit geven.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Jaarplanning per A-relatie</div><div class="step-desc">Min. 6 contactmomenten per jaar in de agenda: 2× persoonlijk gesprek · 2× handgeschreven kaartje · 2× waarde-contact (marktupdate, tip).</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Nazorggesprek (binnen 30 dagen na transactie)</div><div class="step-desc">Beste moment voor een referral-gesprek: emotie hoog, vertrouwen op hoogtepunt. Luister eerst — referral-vraag komt organisch aan het einde.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Waardecontacten verzorgen</div><div class="step-desc">Elk contact moet waarde toevoegen: marktupdate, buurtnieuws, verjaardag, tip. Nooit contact zonder reden.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">De referral-vraag stellen — altijd expliciet</div><div class="step-desc">Stel de vraag. Laat stilte vallen. Wacht. Een nee nu kan een ja over 3 maanden zijn.</div></div></div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — directe referral-vraag (A-relatie, Buffini methode)</div>
+        <div class="script-line">"[Naam], ik wil je iets vragen. Mijn makelaardij groeit voor een groot deel via mensen die mij aanbevelen — niet via koude acquisitie, maar via mensen zoals jij."<br>"Ken jij op dit moment iemand — een kennis, collega, buur of familielid — die nadenkt over kopen, verkopen of huren?"<br>[Laat stilte vallen. Wacht.]<br>[Als er een naam komt:] "Mag ik jou vragen om een berichtje te sturen om mij te introduceren? Dan neem ik zelf contact op. Ik zorg goed voor ze, beloofd."<br>[Als niemand:] "Geen probleem. Mocht je iemand bedenken, dan weet je me te vinden."</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — zachte referral-vraag (nieuwere relatie)</div>
+        <div class="script-line">"[Naam], stel dat iemand in je omgeving overweegt iets te kopen of verkopen — zou je dan aan mij denken?"<br>[Als ja:] "Fijn. Heb je mijn kaartje nog, of stuur ik er nog één?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 12 — MINDSET -->
+  <div id="b-m12" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m12')">
+      <div><div class="cb-title">Module 12 — Persoonlijk Leiderschap & Mindset</div><div class="cb-sub">Slotprogramma · Growth Mindset · Stoïcisme · Zone of Genius · Visioenoefening</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Kernprincipe — Ninja Selling & Growth Mindset</div>
+        <div class="ninja-quote">"Techniek zonder mindset levert geen duurzame resultaten. Wie jij bent als persoon bepaalt hoe ver je komt als makelaar. Gewoonten zijn de uitdrukking van jouw identiteit."</div>
+      </div>
+      <table class="data-table">
+        <tr><th>#</th><th>Principe</th><th>Toepassing</th></tr>
+        <tr><td>1</td><td><strong>Growth Mindset</strong></td><td>Elke afgewezen opdracht is leerstof. "Ik kan dit nog niet" i.p.v. "Ik kan dit niet." Wekelijkse zelfreflectie: wat leerde ik deze week?</td></tr>
+        <tr><td>2</td><td><strong>Stoïcisme</strong></td><td>Je kunt niet controleren of een koper koopt. Wel hoeveel gesprekken je voert, hoe je je voorbereidt en hoe je reageert op tegenslag.</td></tr>
+        <tr><td>3</td><td><strong>Veerkracht</strong></td><td>De vraag is niet óf je een tegenvaller krijgt — maar hoe snel je daarna terugkomt. Routine + community + perspectief zijn de drie pijlers.</td></tr>
+        <tr><td>4</td><td><strong>Zone of Genius</strong></td><td>Identificeer je top 3 sterktes. Richt 80% van je energie hierop. Delegeer of minimaliseer de rest.</td></tr>
+        <tr><td>5</td><td><strong>Gewoonten als fundament</strong></td><td>Identiteit → Gewoonten → Resultaten. De Ninja Nine is de dagelijkse uitdrukking van je identiteit als professional.</td></tr>
+      </table>
+      <div class="script-box">
+        <div class="script-label">Visioenoefening — schrijf dit uit in je notitieboek</div>
+        <div class="script-line">"Over 5 jaar ben ik een makelaar die..."<br>"De reden dat dit voor mij belangrijk is, is..."<br>"De versie van mezelf die dit bereikt, doet elke dag..."<br>"De grootste uitdaging op weg naar dat visioen is..."<br>"De eerste stap die ik morgen zet is..."</div>
+      </div>
+      <div class="script-box">
+        <div class="script-label">Script — kwartaalgesprek persoonlijke groei met mentor</div>
+        <div class="script-line">"Als je één ding zou noemen dat ik de komende drie maanden zou kunnen verbeteren om een grotere impact te hebben — wat zou dat zijn?"<br>[Luister. Schrijf op.]<br>"En als ik daarin zou groeien — hoe zou dat er dan uitzien in de praktijk?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 1 — TIJDMANAGEMENT -->
+  <div id="b-m1" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-m1')">
+      <div><div class="cb-title">Module 1 — Tijdmanagement & Werkplanning</div><div class="cb-sub">IGTs · Time Blocking · Eisenhower · Energiebeheer · Ideaal weekschema</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="ninja-box">
+        <div class="ninja-label">Ninja Selling — Productiepyramide</div>
+        <div class="ninja-quote">"Niet alle activiteiten zijn gelijk. Inkomstengenererende activiteiten (IGTs) moeten elke dag de eerste prioriteit zijn — vóór e-mail, admin en vergaderingen."</div>
+      </div>
+      <table class="data-table">
+        <tr><th>#</th><th>Principe</th><th>Toepassing bij MVA</th></tr>
+        <tr><td>1</td><td><strong>IGTs eerst</strong></td><td>Bezichtigingen, klantgesprekken, acquisitie, Ninja Nine. Altijd 's ochtends — nooit aan het einde van de dag.</td></tr>
+        <tr><td>2</td><td><strong>Time Blocking</strong></td><td>Maandag 9–11: bellen. Dinsdag 13–17: bezichtigingen. Vrijdag 9–10: Cloze bijwerken. Bescherm deze blokken als afspraken.</td></tr>
+        <tr><td>3</td><td><strong>Eisenhower Matrix</strong></td><td>Urgent+Belangrijk: direct doen. Niet urgent+Belangrijk: inplannen. Urgent+Niet belangrijk: delegeren. Niets van beide: schrappen.</td></tr>
+        <tr><td>4</td><td><strong>Energiebeheer</strong></td><td>Zware gesprekken (onderhandeling, acquisitie) in de ochtend. Admin en e-mail na de lunch.</td></tr>
+        <tr><td>5</td><td><strong>Routines</strong></td><td>De Ninja Nine ochtendroutine is je fundament. Elke dag hetzelfde — ook als het druk is. Juist dan.</td></tr>
+      </table>
+      <table class="data-table">
+        <tr><th>Dag</th><th>Ochtend (9–12)</th><th>Middag (13–17)</th></tr>
+        <tr><td><strong>Ma</strong></td><td>Ninja Nine + database bijwerken + week plannen</td><td>Bezichtigingen / klantgesprekken</td></tr>
+        <tr><td><strong>Di</strong></td><td>Klantenservicegesprekken bellen</td><td>Bezichtigingen / aankoopbegeleiding</td></tr>
+        <tr><td><strong>Wo</strong></td><td>Acquisitie / verkoopgesprekken</td><td>Bezichtigingen / dossierwerk</td></tr>
+        <tr><td><strong>Do</strong></td><td>Bezichtigingen / intakegesprekken</td><td>Onderhandelingen / notaris / admin</td></tr>
+        <tr><td><strong>Vr</strong></td><td>Ninja Nine + Cloze bijwerken + week afsluiten</td><td>Netwerk / evenementen / nazorg</td></tr>
+      </table>
+      <div class="warn-box"><strong>Valkuil:</strong> E-mail openen als eerste ding 's ochtends. Dan sta je meteen in de agenda van anderen. Doe altijd eerst de Ninja Nine.</div>
+    </div>
+  </div>
+
+  <!-- WONINGWAARDE ADVIESDAGEN -->
+  <div id="b-wwa" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-wwa')">
+      <div><div class="cb-title">Woningwaarde Adviesdagen 2026</div><div class="cb-sub">4× per jaar · 21 dagen per campagne · Leadgeneratie · Buurtexpertise</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>Kernbelofte:</strong> "Uw woningwaarde weten? Dat kan met een plan." Persoonlijk. Deskundig. Lokaal gespecialiseerd. Geen modellen of snelle verkooppraatjes — wél persoonlijk advies en wijkkennis.</div>
+      <table class="data-table">
+        <tr><th>Editie</th><th>Exacte data 2026</th><th>Thema</th><th>Slogan</th></tr>
+        <tr><td><strong>Editie 1</strong></td><td>📅 Za 21 feb – ma 2 mrt</td><td>Financiële grip & woonoptimalisatie · Gezinnen 35–55 · Senioren 55+</td><td>"Weet wat u waard bent en betaal niet te veel."</td></tr>
+        <tr><td><strong>Editie 2</strong></td><td>📅 Za 23 mei – wo 3 jun</td><td>Zomerscan — verzilveren of verbeteren · Gezinnen · verbouwers · doorstromers</td><td>"Uw woning, uw vermogen. Wat doet u ermee?"</td></tr>
+        <tr><td><strong>Editie 3</strong></td><td>📅 Za 22 aug – wo 2 sep</td><td>Nieuwe start — heractivatie & doorstroming · Starters · jonge gezinnen · expats</td><td>"Droomde u deze zomervakantie van een ander huis?"</td></tr>
+        <tr><td><strong>Editie 4</strong></td><td>📅 Za 21 nov – di 1 dec</td><td>Jaareinde — vermogenscheck · Doorstromers · beleggers</td><td>"Wat is uw woning dit jaar waard geworden?"</td></tr>
+      </table>
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Start marketing (dag 10–11 van de maand)</div><div class="step-desc">Social media · buurtmailings via Yisual · eigen website · Google advertenties</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Pre-sales activatie in Cloze (dag 12–14)</div><div class="step-desc">Database activeren: heractivatie van eerdere contacten + nieuwe leads toevoegen</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Leadopvolging (gemiddeld 25 dagen)</div><div class="step-desc">5-min regel · 5-pogingen · A/B/C indeling · persoonlijk contact via telefoon</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Adviesdagen (laatste 7 dagen + 3 dagen nieuwe maand)</div><div class="step-desc">Persoonlijke afspraken bij de klant thuis of op kantoor. Geen gestandaardiseerde tool — echte wijkkennis en persoonlijk advies.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">Nazorg + 12-weken nurture (84 dagen)</div><div class="step-desc">Iedereen die niet direct verkoopt gaat in een 84-daagse nurture-flow tot de volgende editie. Geen lead verloren laten gaan.</div></div></div>
+      </div>
+      <div class="success-box"><strong>Doelstellingen per editie:</strong> Kwalitatieve verkoopleads genereren · merkherkenning versterken · positionering als woningwaarde-expert per buurt · verkeer naar persoonlijke makelaarspagina's met directe boeking.</div>
+    </div>
+  </div>
+
+  <!-- KANTOORKALENDER 2026 -->
+  <div id="b-kalender" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-kalender')">
+      <div><div class="cb-title">Kantoorkalender 2026 — Volledig overzicht</div><div class="cb-sub">Alle evenementen · Overlegmomenten · Vakanties · Vaste wekelijkse overleggen</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin-bottom:10px;">Relaties & Team events</div>
+      <table class="data-table">
+        <tr><th>Activiteit</th><th>Wie</th><th>Data 2026</th></tr>
+        <tr><td><strong>Nieuwjaarsborrel</strong></td><td>Iedereen</td><td>Di 13 jan 17.00–19.00</td></tr>
+        <tr><td><strong>Avanti varen</strong></td><td>Makelaars + relaties</td><td>Vr 16 jan · Di 9 jun · Di 22 sep</td></tr>
+        <tr><td><strong>Padeltoernooi</strong></td><td>Makelaars + relaties + prospects</td><td>Di 17 feb 15.00–20.00</td></tr>
+        <tr><td><strong>Stadswandeling prospects</strong></td><td>Makelaars + prospects</td><td>Di 3 mrt · Di 26 mei · Di 6 okt (16.00–19.00)</td></tr>
+        <tr><td><strong>Zomerborrel</strong></td><td>Iedereen</td><td>Do 2 jul (nader te bepalen)</td></tr>
+        <tr><td><strong>Maandborrel</strong></td><td>Iedereen</td><td>Laatste vrijdag v/d maand 17.00–19.00<br>30 jan · 27 feb · 27 mrt · 24 apr · 29 mei · 25 sep · 30 okt · 27 nov</td></tr>
+        <tr><td><strong>Kerstlunch</strong></td><td>Iedereen</td><td>Do 17 dec 12.30–14.30</td></tr>
+      </table>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:14px 0 8px;">Vaste wekelijkse overleggen</div>
+      <table class="data-table">
+        <tr><th>Overleg</th><th>Deelnemers</th><th>Moment</th></tr>
+        <tr><td>Directieoverleg</td><td>Ton + Hans</td><td>Wekelijks di 09.00–12.00</td></tr>
+        <tr><td>Financieel overleg</td><td>Johan + Ton</td><td>Wekelijks wo 15.00–15.30</td></tr>
+        <tr><td>Operationeel overleg</td><td>Ton + José</td><td>Wekelijks di 11.00–12.00</td></tr>
+        <tr><td>Marketingoverleg</td><td>Hans + Dominique</td><td>Tweewekelijks</td></tr>
+      </table>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:14px 0 8px;">Periodieke overleggen</div>
+      <table class="data-table">
+        <tr><th>Overleg</th><th>Deelnemers</th><th>Data</th></tr>
+        <tr><td>Strategisch overleg</td><td>Rogier · Hans · Ton</td><td>Za 10 jan · 14 feb · 14 mrt · 11 apr · 9 mei · 13 jun · 11 jul · 12 sep · 14 nov</td></tr>
+        <tr><td>BG Accountants</td><td>Hans · Ton</td><td>Vr 23 jan · 24 apr · 10 jul · 23 okt (09.00–12.00)</td></tr>
+        <tr><td>Financieel overleg MVA</td><td>Ton · José · Johan</td><td>2e vrijdag v/d maand 10.00–11.00</td></tr>
+        <tr><td>Financieel overleg Makelaarsvan.nl</td><td>Hans · Ton · Johan</td><td>Vr 16 jan · 17 apr · 3 jul · 16 okt (10.00–11.00)</td></tr>
+        <tr><td>Kantoor + medewerkers update</td><td>Intern</td><td>Wo 25 feb · 1 jul · 28 okt (13.30–15.30)</td></tr>
+        <tr><td>Marketingmeeting makelaars</td><td>Makelaars · Ton · Hans</td><td>Do 12 mrt · 14 mei · 9 jul · 17 sep · 19 nov (13.30–14.30)</td></tr>
+      </table>
+
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:14px 0 8px;">Schoolvakanties Noord (relevant voor bezichtigingsplanning)</div>
+      <table class="data-table">
+        <tr><th>Vakantie</th><th>Periode</th></tr>
+        <tr><td>Voorjaarsvakantie</td><td>21 feb – 1 mrt</td></tr>
+        <tr><td>Meivakantie</td><td>25 apr – 3 mei</td></tr>
+        <tr><td>Zomervakantie</td><td>4 jul – 16 aug</td></tr>
+        <tr><td>Herfstvakantie</td><td>10 okt – 18 okt</td></tr>
+        <tr><td>Kerstvakantie</td><td>19 dec – 3 jan</td></tr>
+      </table>
+
+      <div class="warn-box"><strong>Ton afwezig:</strong> Vakantie Bali–Perth 11 maart – 8 april · Bamibo 28–31 mei · Fietsen met Thomas 18–21 juni · Margit vakantie 12–19 juli · Vrij houden 12 juli – 30 aug</div>
+    </div>
+  </div>
+
+  <!-- INTAKE VRAGEN VERKOOP -->
+  <div id="b-intake" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-intake')">
+      <div><div class="cb-title">Intake vragen verkoop — verkoopgesprek</div><div class="cb-sub">Verplichte vragen · Mededelingsplicht · Verkopersvragenlijst ABC</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>Mededelingsplicht:</strong> De verkoper is wettelijk verplicht om uitvoerig informatie te verstrekken over de woning — ook als die informatie minder gunstig lijkt. Gebreken die tijdig worden gemeld kunnen goed worden afgesproken met de koper. Niet melden = risico op aansprakelijkstelling achteraf.</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:12px 0 8px;">Verplichte intake vragen verkoopgesprek</div>
+      <table class="data-table">
+        <tr><th>Categorie</th><th>Vragen</th></tr>
+        <tr><td><strong>Motivatie</strong></td><td>Waarom wilt u verkopen? · Wanneer zou u willen verkopen? · Wat kan een reden zijn om het nú niet in de verkoop te zetten?</td></tr>
+        <tr><td><strong>Woning</strong></td><td>Wat denkt u dat uw woning waard is? · Zijn er zaken die van invloed zijn op de waarde? · Wat zou u nog willen doen aan de woning?</td></tr>
+        <tr><td><strong>Situatie</strong></td><td>Bent u alleen eigenaar of samen met uw partner? · Heeft u al een andere woning op het oog? · Hoe hoog is uw hypotheek?</td></tr>
+        <tr><td><strong>Verwachting</strong></td><td>Heeft u andere partijen die u wilt inschakelen? · Wat verwacht u van een makelaar?</td></tr>
+        <tr><td><strong>Planning</strong></td><td>Wanneer mogen wij de woning online zetten? · Kunnen wij al een afspraak inplannen voor plattegronden en foto's?</td></tr>
+      </table>
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--light);margin:14px 0 8px;">Verkopersvragenlijst ABC — structuur</div>
+      <table class="data-table">
+        <tr><th>Deel</th><th>Inhoud</th><th>Aan wie</th></tr>
+        <tr><td><strong>Deel A</strong></td><td>Persoonlijk: financiering, hypotheek, eigendomssituatie, huwelijksvoorwaarden</td><td>Alleen voor verkoper + makelaar</td></tr>
+        <tr><td><strong>Deel B</strong></td><td>Algemeen: toestand onroerende zaak, gebreken, verbouwingen, juridische zaken</td><td>Kan ook worden verstrekt aan koper (bij koopakte)</td></tr>
+        <tr><td><strong>Deel C</strong></td><td>Appartement: VvE, splitsing, servicekosten, MJOP</td><td>Alleen invullen bij appartement</td></tr>
+      </table>
+      <div class="warn-box"><strong>Invullen vóór publicatie:</strong> Volledig en naar waarheid invullen. Bij twijfel: vraagteken zetten en direct contact opnemen met de makelaar. De lijst zo spoedig mogelijk aanleveren — publicatie pas na volledig dossier (VBO-regelgeving).</div>
+    </div>
+  </div>
+
+</div><!-- /page-modules -->
+
+<!-- ══════════════════════════════════════════
+     AVV OPLEIDING
+══════════════════════════════════════════ -->
+<div id="page-avv" class="page-section">
+
+  <div class="section-header">
+    <div class="section-tag">Academie voor Vastgoed · Verplichte Opleiding</div>
+    <div class="section-title">AVV Opleidingspad</div>
+    <div class="section-sub">A-RMT (BT1 + Praktijk) · BT1+BT2 · Examens · Kosten · Startmomenten 2026</div>
+    <div class="section-meta">
+      <span class="meta-badge">NVM-kantoor: 10% korting</span>
+      <span class="meta-badge">Tijdelijke ontheffing tijdens opleiding</span>
+      <span class="meta-badge">www.academievoorvastgoed.nl</span>
+    </div>
+  </div>
+
+  <div id="b-armt" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-armt')">
+      <div><div class="cb-title">Route A — A-RMT (BT1 + Praktijkmodule)</div><div class="cb-sub">1 jaar · Snel starten · NVM-prijs totaal ±€3.984</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <div class="success-box"><strong>A-RMT = Assistent-Makelaar Register VastgoedCert.</strong> Je kunt zelfstandig bezichtigingen en onderhandelingen uitvoeren. Ideaal voor wie snel wil starten en later wil doorgroeien.</div>
+      <table class="data-table">
+        <tr><th>Onderdeel</th><th>Inhoud</th><th>Examen</th></tr>
+        <tr><td><strong>BT1 module 1</strong></td><td>Bouwkunde</td><td>SVMNIVO</td></tr>
+        <tr><td><strong>BT1 module 2</strong></td><td>Privaatrecht</td><td>SVMNIVO</td></tr>
+        <tr><td><strong>BT1 module 3</strong></td><td>Publiekrecht</td><td>SVMNIVO</td></tr>
+        <tr><td><strong>BT1 module 4</strong></td><td>VEB (Vastgoedfinanciering, Economie & Belastingen)</td><td>SVMNIVO</td></tr>
+        <tr><td><strong>BT1 module 5</strong></td><td>Vastgoedpraktijk & Professioneel Handelen</td><td>AVV (intern)</td></tr>
+        <tr><td><strong>Praktijkmodule A-RMT</strong></td><td>Verkoopdossier · brochure · social media · onderhandelen simulatie</td><td>AVV (klassikaal verplicht)</td></tr>
+      </table>
+      <div class="warn-box"><strong>Aanwezigheid Praktijkmodule is verplicht</strong> — ook als je de rest virtueel volgt. 3 klassikale lessen op locatie.</div>
+    </div>
+  </div>
+
+  <div id="b-bt12" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-bt12')">
+      <div><div class="cb-title">Route B — BT1 + BT2 (Volledig)</div><div class="cb-sub">9–12 maanden · Richting kandidaat-makelaar · NVM-prijs totaal ±€6.204</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="info-box"><strong>BT1+BT2 is de route naar kandidaat-makelaar of taxateur.</strong> Dezelfde 5 modules als BT1, maar op zowel basis- als verdiepingsniveau. Één gecombineerd examen per module bij SVMNIVO (scheelt tijd + geld).</div>
+      <table class="data-table">
+        <tr><th>Variant</th><th>Lestijden</th><th>Duur</th><th>Studiebelasting</th></tr>
+        <tr><td>Dagopleiding</td><td>09:30–16:15</td><td>9–12 maanden</td><td>±15 uur/week</td></tr>
+        <tr><td>Middag/avond</td><td>14:45–21:30</td><td>9–12 maanden</td><td>±15 uur/week</td></tr>
+        <tr><td>Avond</td><td>18:30–21:30</td><td>20 maanden</td><td>±7 uur/week</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="b-modules-avv" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-modules-avv')">
+      <div><div class="cb-title">5 Modules & Examinering</div><div class="cb-sub">4× SVMNIVO · 1× AVV · Gratis proeftoets per module</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Bouwkunde</div><div class="step-desc">Constructie, materialen, gebreken, bouwtechnische keuring · Examen: SVMNIVO</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Privaatrecht</div><div class="step-desc">Eigendomsrecht, koopovereenkomst, erfpacht, VvE, huurrecht · Examen: SVMNIVO</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Publiekrecht</div><div class="step-desc">Bestemmingsplan, bouwvergunning, gemeentelijk beleid · Examen: SVMNIVO</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">VEB (Vastgoedfinanciering, Economie & Belastingen)</div><div class="step-desc">Hypotheken, overdrachtsbelasting, BTW vastgoed, marktanalyse · Examen: SVMNIVO</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--amber)">5</div><div class="step-content"><div class="step-title">Vastgoedpraktijk & Professioneel Handelen</div><div class="step-desc">Verkoopdossier, brochure, social media post, onderhandelen simulatie · Examen: AVV (intern)</div></div></div>
+      </div>
+      <div class="info-box"><strong>Tip:</strong> Boek je examen direct na afronding van de module — hogere slagingskans. Gratis proeftoets ontvang je per e-mail van AVV aan het einde van elke module. Boeken bestellen bij Studiebijdehand — link ontvang je 3 weken voor start.</div>
+    </div>
+  </div>
+
+  <div id="b-kosten" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-kosten')">
+      <div><div class="cb-title">Kosten & Startmomenten 2026</div><div class="cb-sub">NVM-prijs · Reguliere prijs · Regio Amsterdam · Virtueel</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Opleiding</th><th>NVM-prijs (excl. BTW)</th><th>Totaal incl. boeken + examens</th></tr>
+        <tr><td><strong>A-RMT (BT1 + Praktijk)</strong></td><td>€2.245,50</td><td>±€3.984</td></tr>
+        <tr><td><strong>BT1 + BT2 volledig</strong></td><td>€3.865,50</td><td>±€6.204</td></tr>
+      </table>
+      <table class="data-table">
+        <tr><th>Startmoment</th><th>Locatie</th><th>Opleiding</th><th>Status</th></tr>
+        <tr><td>21 mei 2026</td><td>Virtueel (Zoom)</td><td>A-RMT</td><td style="color:var(--amber);">Bijna vol</td></tr>
+        <tr><td>22 september 2026</td><td>Amsterdam Klassikaal</td><td>A-RMT</td><td style="color:var(--green);">Beschikbaar</td></tr>
+        <tr><td>28 september 2026</td><td>Amsterdam Klassikaal</td><td>BT1+BT2</td><td style="color:var(--green);">Beschikbaar</td></tr>
+        <tr><td>2 oktober 2026</td><td>Amsterdam Klassikaal (dag)</td><td>BT1+BT2</td><td style="color:var(--green);">Beschikbaar</td></tr>
+        <tr><td>21 september 2026</td><td>Virtueel (Zoom)</td><td>BT1+BT2</td><td style="color:var(--green);">Beschikbaar</td></tr>
+      </table>
+      <div class="success-box"><strong>NVM-voordeel:</strong> Als MVA-makelaar (NVM-aangesloten) ontvang je 10% korting op de cursusprijs. Ton kan ook een tijdelijke ontheffing aanvragen bij NVM zodat je A-RMT werkzaamheden mag uitvoeren tijdens je opleiding.</div>
+    </div>
+  </div>
+
+</div><!-- /page-avv -->
+
+<!-- ══════════════════════════════════════════
+     NINJA SELLING
+══════════════════════════════════════════ -->
+<div id="page-ninja" class="page-section">
+
+  <div class="section-header">
+    <div class="section-tag">Ninja Selling · Larry Kendall · Vertaling Ton Coffeng</div>
+    <div class="section-title">Ninja Selling — De Filosofie</div>
+    <div class="section-sub">42 hoofdstukken + bijlagen A–H · Connection before conversion · Service before sales</div>
+  </div>
+
+  <div id="b-principes" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-principes')">
+      <div><div class="cb-title">De 4 Principes van Ninja Selling</div><div class="cb-sub">Fundament van alles wat je doet bij MVA</div></div>
+      <div class="toggle-icon open">▾</div>
+    </div>
+    <div class="cb-body open">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Wees wie je bent</div><div class="step-desc">Authenticiteit verkoopt. Mensen kopen van mensen die ze kennen, vertrouwen en leuk vinden. Geen trucjes — jij bent het product.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Bouw relaties</div><div class="step-desc">Database = bedrijf. 36 contactmomenten per jaar per C-relatie. Elke persoon in je database is gemiddeld €500–€1.000 per jaar waard als je de relatie goed onderhoudt.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Geef waarde</div><div class="step-desc">Geef meer dan je vraagt. Marktinfo, tips, introductions, handgeschreven kaartjes. Wees de expert — niet de verkoper.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Vraag om business</div><div class="step-desc">"Ken jij toevallig iemand die binnenkort gaat kopen of verkopen?" — Vraag het. Altijd. Elke week.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-ninja9" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ninja9')">
+      <div><div class="cb-title">Ninja Nine — Dagelijkse & Wekelijkse Gewoonten</div><div class="cb-sub">Hoofdstuk 27–28 · Elke dag uitvoeren · Bijhouden in Cloze</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Gewoonte</th><th>Frequentie</th><th>Doel</th></tr>
+        <tr><td>Handgeschreven notities</td><td>2 per dag</td><td>Persoonlijke verbinding · onverwacht · wordt bewaard</td></tr>
+        <tr><td>Telefoongesprekken (relaties)</td><td>5 per dag</td><td>Database levend houden · FORD toepassen</td></tr>
+        <tr><td>Persoonlijk bezoek</td><td>1 per week</td><td>Face-to-face verbinding · sterkste contact</td></tr>
+        <tr><td>Aanbeveling vragen</td><td>1 per week</td><td>"Ken jij iemand die ik kan helpen?"</td></tr>
+        <tr><td>Ochtendritueel</td><td>Elke dag</td><td>Focus, dankbaarheid, planning</td></tr>
+        <tr><td>Cloze bijhouden</td><td>Na elk contact</td><td>Niets vergeten · opvolging bewaken</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="b-ford" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-ford')">
+      <div><div class="cb-title">FORD-methode</div><div class="cb-sub">Hoofdstuk 16–17 · In elk gesprek · Geen verkoopgesprekken</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="kpi-grid">
+        <div class="kpi-item"><div class="kpi-num" style="font-size:20px;">F</div><div class="kpi-label">Family · Gezin · Kinderen</div></div>
+        <div class="kpi-item"><div class="kpi-num" style="font-size:20px;">O</div><div class="kpi-label">Occupation · Werk · Carrière</div></div>
+        <div class="kpi-item"><div class="kpi-num" style="font-size:20px;">R</div><div class="kpi-label">Recreation · Hobby's · Sport</div></div>
+        <div class="kpi-item"><div class="kpi-num" style="font-size:20px;">D</div><div class="kpi-label">Dreams · Dromen · Plannen</div></div>
+      </div>
+      <div class="info-box"><strong>Gebruik FORD in elk gesprek:</strong> Bij telefoongesprekken, bezichtigingen, floortime, en na transacties. Noteer wat je hoort in Cloze onder de contactpersoon. "Dreams" leidt het vaakst direct naar vastgoedgesprekken.</div>
+    </div>
+  </div>
+
+  <div id="b-flow" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-flow')">
+      <div><div class="cb-title">Flow & Ochtendritueel</div><div class="cb-sub">Hoofdstuk 23–24 · Dagelijkse installatie · Focus + energie</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">7:00</div><div class="step-content"><div class="step-title">Dankbaarheidslijst schrijven</div><div class="step-desc">3–5 dingen waarvoor je dankbaar bent. Op papier, niet digitaal. Zet de juiste mindset.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">7:15</div><div class="step-content"><div class="step-title">Focustaak bepalen</div><div class="step-desc">Wat is de ÉÉNE taak die vandaag het meeste impact heeft? Begin daar mee — vóór e-mail en telefoon.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">7:30</div><div class="step-content"><div class="step-title">Ninja Nine plannen</div><div class="step-desc">Wie bel ik vandaag? Aan wie stuur ik een kaartje? Wanneer doe ik mijn dagelijkse contacten?</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">8:00</div><div class="step-content"><div class="step-title">Starten — connection first</div><div class="step-desc">Begin de dag met een persoonlijk telefoontje of kaartje schrijven. Niet met e-mail lezen.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="b-8x8" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-8x8')">
+      <div><div class="cb-title">8×8 Campagne — Eerste 8 Weken</div><div class="cb-sub">Hoofdstuk 25 · 50 namen · 1× per week iets waardevols · Geen verkoop</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <table class="data-table">
+        <tr><th>Week</th><th>Contactmoment</th><th>Inhoud</th></tr>
+        <tr><td>Week 1</td><td>Handgeschreven kaartje</td><td>"Ik ben gestart als makelaar bij MVA — ik wilde je dat als eerste laten weten"</td></tr>
+        <tr><td>Week 2</td><td>Telefoontje</td><td>Kort inchecken, FORD vragen, niet over vastgoed</td></tr>
+        <tr><td>Week 3</td><td>E-mail met waarde</td><td>Marktupdate Amsterdam — kort en relevant</td></tr>
+        <tr><td>Week 4</td><td>Handgeschreven kaartje</td><td>Persoonlijk bedankje, knipsel, tip</td></tr>
+        <tr><td>Week 5</td><td>Telefoontje</td><td>"Ken jij toevallig iemand die binnenkort gaat kopen of verkopen?"</td></tr>
+        <tr><td>Week 6</td><td>E-mail</td><td>Interessant artikel over woonmarkt of buurt</td></tr>
+        <tr><td>Week 7</td><td>Kaartje of klein cadeau</td><td>Verrassing — iets persoonlijks op basis van FORD-notitie</td></tr>
+        <tr><td>Week 8</td><td>Telefoontje</td><td>Evaluatie: hoe gaat het? Aanbeveling vragen</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="b-consultatie" class="content-block">
+    <div class="cb-header" onclick="toggleBlock('b-consultatie')">
+      <div><div class="cb-title">Consultatie — 4 Stappen</div><div class="cb-sub">Hoofdstuk 37–41 · Bijlage A kopers · Bijlage H volgende transactie</div></div>
+      <div class="toggle-icon">▾</div>
+    </div>
+    <div class="cb-body">
+      <div class="steps">
+        <div class="step"><div class="step-num" style="background:var(--orange)">1</div><div class="step-content"><div class="step-title">Rapport opbouwen</div><div class="step-desc">FORD · luisteren · spiegelen · vertrouwen bouwen. Geen pitch. Vraag wat voor hen belangrijk is.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--blue)">2</div><div class="step-content"><div class="step-title">Situatie begrijpen</div><div class="step-desc">Huidige situatie · tijdlijn · budget · prioriteiten · wie zijn de beslissers? Wat is de echte motivatie?</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--green)">3</div><div class="step-content"><div class="step-title">Oplossing presenteren</div><div class="step-desc">Op basis van wat je hebt gehoord — niet je standaard pitch. Maatwerk. Toon hoe jij hun specifieke situatie oplost.</div></div></div>
+        <div class="step"><div class="step-num" style="background:var(--navy)">4</div><div class="step-content"><div class="step-title">Commitment vragen</div><div class="step-desc">"Wil je met ons samenwerken?" Vraag het direct. Een goede consultant vraagt om commitment — dat is geen druk, dat is respect voor ieders tijd.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-ninja -->
+
+</div><!-- /main -->
+</div><!-- /layout -->
+
+<footer>
+  <div class="fl"><div class="fl-top">MAKELAARSVAN.</div><div class="fl-bot">AMSTERDAM</div></div>
+  <div class="fn">MVA Academie Volledig Leerpad · Versie 1.1 · Maart 2026<br>Ton Coffeng · Hans Koppes · Monique · Johan Vast · José Valencia · Scott Witteman (BG)</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function showPage(page, el) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('[id^="sb-"]').forEach(s => s.style.display = 'none');
+
+  var pageEl = document.getElementById('page-' + page);
+  if(pageEl) pageEl.classList.add('active');
+
+  var sbEl = document.getElementById('sb-' + page);
+  if(sbEl) sbEl.style.display = 'block';
+
+  if(el) el.classList.add('active');
+
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  var firstSb = document.querySelector('#sb-' + page + ' .sb-item');
+  if(firstSb) firstSb.classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+
+function showBlock(page, blockId, el) {
+  document.querySelectorAll('#sb-' + page + ' .sb-item').forEach(i => i.classList.remove('active'));
+  if(el) el.classList.add('active');
+
+  const block = document.getElementById(blockId);
+  if(block) {
+    block.scrollIntoView({behavior: 'smooth', block: 'start'});
+    const body = block.querySelector('.cb-body')
+    if(body && !body.classList.contains('open')) {
+      body.classList.add('open');
+      const icon = block.querySelector('.toggle-icon');
+      if(icon) icon.classList.add('open');
+    }
+  }
+}
+
+function toggleBlock(blockId) {
+  var block = document.getElementById(blockId);
+  var body = 
